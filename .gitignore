@@ -1,0 +1,6 @@
+# Ignorar la carpeta de dependencias  
+node_modules/  
+
+# Ignorar los archivos de configuración de aplicación  
+package.json  
+package-lock.json
