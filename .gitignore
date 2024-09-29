@@ -1,0 +1,6 @@
+# Ignorar la carpeta node_modules si
+node_modules/
+
+# Ignorar archivos de bloqueo y de configuración de paquetes
+package-lock.json
+package.json
