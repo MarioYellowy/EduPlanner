@@ -1,6 +1,7 @@
 html, body {
     background-color: #92CACE;
 }
+
 label {
     color: #1A2C32;
     font-size: 24px;
@@ -10,6 +11,7 @@ label {
     padding-left: 10rem;
     margin: 1rem;
 }
+
 input {
     background-color: #DDEFF0;
     margin-left: 10rem;
@@ -29,6 +31,28 @@ button[for="register"] {
     margin-top: auto;
     margin-left: 15rem;
     font-size: 24px;
+    font-family: inter;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+button[for="register"]:hover {
+    background-color: #4b8f95; 
+    transform: scale(1.05); 
+}
+
+button[for="register"]:active {
+    background-color: #3a7d82; 
+    transform: scale(0.95); 
+}
+
+input[type="text"] {
+    font-size: 15px;
+    font-family: inter;
+}
+
+input[type="password"] {
+    font-size: 15px;
     font-family: inter;
 }
 
@@ -55,6 +79,7 @@ button[for="register"] {
     opacity: 1;
     border-radius: 1rem;
 }
+
 .flex_container {
     display: flex;
     justify-content: space-around;
