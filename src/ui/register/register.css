@@ -1,7 +1,35 @@
 html, body {
     background-color: #92CACE;
-   
-    
+}
+label {
+    color: #1A2C32;
+    font-size: 24px;
+    font-family: inter;
+    font-style: italic;
+    font-weight: bold;
+    padding-left: 10rem;
+    margin: 1rem;
+}
+input {
+    background-color: #DDEFF0;
+    margin-left: 10rem;
+    width: 45%;
+    height: 2rem;
+    border-radius: 0.5rem;
+    border-style: none;
+}
+
+button[for="register"] {
+    background-color: #5FAAB1;
+    color: #FFFFFF;
+    border-style: none;
+    border-radius: 1.5rem;
+    width: 20%;
+    height: 2.5rem;
+    margin-top: auto;
+    margin-left: 15rem;
+    font-size: 24px;
+    font-family: inter;
 }
 
 .register_line {
@@ -30,7 +58,6 @@ html, body {
 .flex_container {
     display: flex;
     justify-content: space-around;
-    
 }
 
 .welcome_container {
@@ -54,7 +81,8 @@ html, body {
 }
 
 .form_container {
-    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
     width: 46%;
     height: 70vh;
     margin-top: 5%; 
