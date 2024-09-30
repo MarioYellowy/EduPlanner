@@ -26,6 +26,7 @@ html, body {
     opacity: 1;
     border-radius: 1rem;
 }
+
 .flex_container {
     display: flex;
     justify-content: space-around;
