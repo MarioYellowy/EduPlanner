@@ -1,13 +1,22 @@
+const {Notification} = require('electron');
 const { getConnection } = require("../../database");
 
 document.addEventListener('DOMContentLoaded', () => {
-    const userForm = document.getElementById('userForm');
+    const userForm = document.getElementById('userForm');   
     
     async function createUser(new_user) {
         try {
             const conn = await getConnection(); 
             const [result] = await conn.query('INSERT INTO Users SET ?', new_user);
             console.log(result);
+            const NOTIFICATION_TITLE = 'EduPlanner TO-DO'
+            const NOTIFICATION_BODY = 'User added succesfully'
+            const CLICK_MESSAGE = 'Notification clicked!'
+
+            new window.Notification(NOTIFICATION_TITLE, {  
+                body: NOTIFICATION_BODY 
+            }).onclick = () => { 
+                document.getElementById('output').innerText = CLICK_MESSAGE }       
         } catch (error) {
             console.error('Error al insertar el usuario:', error);
         }
