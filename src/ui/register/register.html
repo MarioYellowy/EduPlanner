@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
-
 <body>
     <hr class="register_line">
     <hr class="register_line_down">
@@ -17,23 +16,31 @@
         <div class="welcome_container">
             <h1 class="welcome_text">WELCOME !!!</h1>
         </div>
-        <div class="form_container">
+        <form action="/submit" id="userForm">      
             <label for="username">USERNAME</label>
-            <input type="text" placeholder="username123">
-            <label for="mail">MAIL</label>
-            <input type="text" placeholder="newUser@gmail.com">
+            <input 
+                type="text" 
+                id="username" 
+                placeholder="username123">
+            <label for="email_user">EMAIL</label>
+            <input 
+                type="text" 
+                id="email_user" 
+                placeholder="newUser@gmail.com">
             <label for="password">PASSWORD</label>
-            <input type="password">
+            <input 
+                type="password" 
+                id="password">
             <label for="repeat_password">REPEAT PASSWORD</label>
-            <input type="password">
+            <input 
+                type="password" 
+                id="repeat_password">
             <button for="register" type="submit">Register</button>
-        </div>
+        </form> 
     </main>
-    
+    <script src="./app.js"></script>
     <footer class="footer_container">
         <p>&copy; 2024 EduPlanner_Team</p>
     </footer>
-    
 </body>
-
 </html>

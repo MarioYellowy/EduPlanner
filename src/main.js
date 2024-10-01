@@ -1,17 +1,22 @@
-const {BrowserWindow} = require('electron')
-let window
+const { app, BrowserWindow} = require('electron');
+const {getConnection} = require("./database")
 
 function createWindow() {
-    window = new BrowserWindow({
+    const window = new BrowserWindow({
         width: 1920,
         height: 1280,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,     
+            contextIsolation: false,      
         }
     })
     window.loadFile('src/ui/register/register.html')
 }
-    
-module.exports = {
-    createWindow
-}
+
+app.whenReady().then(() => {
+    createWindow()
+  })
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit()
+  })
