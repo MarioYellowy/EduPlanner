@@ -1,14 +1,13 @@
-const mysql = require('promise-mysql')
+const mysql = require('mysql2/promise');
 
-const connection = mysql.createConnection({
+async function getConnection() {
+    const connection = await mysql.createConnection({
     host: 'eduplanner.mysql.database.azure.com',
     user: 'eduplanner',
     password: 'proyecto123P',
     database: 'eduplanner'
-})
-
-function getConnection() {
-    return connection;
+});
+return connection;
 }
 
 module.exports = {getConnection}
