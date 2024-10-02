@@ -8,15 +8,17 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const conn = await getConnection(); 
             const [result] = await conn.query('INSERT INTO Users SET ?', new_user);
-            console.log(result);
             const NOTIFICATION_TITLE = 'EduPlanner TO-DO'
             const NOTIFICATION_BODY = 'User added succesfully'
-            const CLICK_MESSAGE = 'Notification clicked!'
+            const CLICK_MESSAGE = 'Ready'
 
             new window.Notification(NOTIFICATION_TITLE, {  
+                title: NOTIFICATION_TITLE,
                 body: NOTIFICATION_BODY 
             }).onclick = () => { 
-                document.getElementById('output').innerText = CLICK_MESSAGE }       
+                document.getElementById('output').innerText = CLICK_MESSAGE }    
+                
+            return new_user;
         } catch (error) {
             console.error('Error al insertar el usuario:', error);
         }
