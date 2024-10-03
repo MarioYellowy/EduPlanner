@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduPlanner</title>
+    <link rel="stylesheet" href="./register.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <hr class="register_line">
+    <hr class="register_line_down">
+    <main class="flex_container">
+        <div class="welcome_container">
+            <h1 class="welcome_text">WELCOME !!!</h1>
+        </div>
+        <form action="/submit" id="userForm">      
+            <label for="username">USERNAME</label>
+            <input 
+                type="text" 
+                id="username" 
+                placeholder="username123">
+            <label for="email_user">EMAIL</label>
+            <input 
+                type="text" 
+                id="email_user" 
+                placeholder="newUser@gmail.com">
+            <label for="password">PASSWORD</label>
+            <input 
+                type="password" 
+                id="password">
+            <label for="confirm_password">CONFIRM PASSWORD</label>
+            <input 
+                type="password" 
+                id="confirm_password">
+            <button for="register" type="submit">Register</button>
+        </form> 
+    </main>
+    <script src="./app.js"></script>
+    <footer class="footer_container">
+        <p>&copy; 2024 EduPlanner_Team</p>
+    </footer>
+</body>
+</html>

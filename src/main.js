@@ -1,25 +1,22 @@
-const { BrowserWindow } = require('electron')
-
-let window;
-function hola() {
-    console.log('holis')
-};
+const { app, BrowserWindow} = require('electron');
+const {getConnection} = require("./database")
 
 function createWindow() {
-    window = new BrowserWindow({
-        width: 800,
-        height: 600,
+    const window = new BrowserWindow({
+        width: 1920,
+        height: 1280,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,     
+            contextIsolation: false,      
         }
     })
-
-    window.loadFile('src/ui/index.html')
-
-
+    window.loadFile('src/ui/login/login.html')
 }
 
-module.exports = {
-    createWindow,
-    hola
-};
+app.whenReady().then(() => {
+    createWindow()
+  })
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit()
+  })
