@@ -10,7 +10,7 @@ function createWindow() {
             contextIsolation: false,      
         }
     })
-    window.loadFile('src/ui/register/register.html')
+    window.loadFile('src/ui/login/login.html')
 }
 
 app.whenReady().then(() => {
