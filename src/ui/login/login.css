@@ -16,11 +16,22 @@ label {
     font-weight: bold;
     width: 100%;
     padding: 0.5rem;
-    margin-left: 2rem;
+    margin-left: 0;
 }
 
 .forgot_password {
-    margin-left: 4rem;
+    text-decoration: none;
+}
+
+.forgot_text {
+    margin-left: 0rem;
+    cursor: pointer;
+    color: #1A2C32; 
+    transition: color 0.3s ease;
+}
+
+.forgot_text:hover {
+    color: #438E96; 
 }
 
 input {
@@ -40,7 +51,7 @@ button[for="login"] {
     color: #FFFFFF;
     border-style: none;
     border-radius: 1.5rem;
-    width: 50%;
+    width: 45%;
     height: 2.5rem;
     font-size: 24px;
     font-family: inter;
@@ -70,8 +81,8 @@ button[for="create"] {
     font-family: inter;
     transition: background-color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
-    margin: 1rem;
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 1rem;
 }
 
 button[for="create"]:hover {
@@ -145,12 +156,10 @@ input[type="password"] {
     height: 70vh;
 }
 
-.icon_img {
-    background-image: url("../img/Generic\ avatar.png");
-    background-size: 80%;
-    background-repeat: no-repeat;
+.avatar {
     height: 14vh;
-    width: 50%;
+    width: 45%;
+    padding-top: 1rem;
 }
 
 .login_line_middle {

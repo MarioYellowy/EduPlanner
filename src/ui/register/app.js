@@ -17,10 +17,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: NOTIFICATION_BODY 
             }).onclick = () => { 
                 document.getElementById('output').innerText = CLICK_MESSAGE }    
-                
-            return new_user;
+                window.location.href = '../login/login.html';
+            return new_user;   
         } catch (error) {
-            console.error('Error al insertar el usuario:', error);
+            const NOTIFICATION_TITLE = 'EduPlanner TO-DO'
+            const NOTIFICATION_BODY = 'User already exist'
+            
+            new window.Notification(NOTIFICATION_TITLE, {  
+                title: NOTIFICATION_TITLE,
+                body: NOTIFICATION_BODY 
+            }).onclick = () => { 
+                document.getElementById('output').innerText = CLICK_MESSAGE }
         }
     }
 
