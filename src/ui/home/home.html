@@ -3,10 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Welcome</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    TEST
+    <div class="container">
+        <!-- Sidebar de categorias -->
+        <section class="sidebar">
+            <h2>Subject</h2>
+            <div class="subject-list">
+                <div class="subject-card green">
+                    <div class="subject-info">
+                        <h3>Databases II</h3>
+                        <p>Lunes-Viernes <br> 10:00 - 12:00</p>
+                    </div>
+                    <button class="delete-btn">🗑️</button>
+                </div>
+                <div class="subject-card pink">
+                    <div class="subject-info">
+                        <h3>Networks</h3>
+                        <p>Tuesday <br> 14:00 - 16:00</p>
+                    </div>
+                    <button class="delete-btn">🗑️</button>
+                </div>
+                <div class="subject-card blue">
+                    <div class="subject-info">
+                        <h3>English</h3>
+                        <p>Friday <br> 13:00 - 14:00</p>
+                    </div>
+                    <button class="delete-btn">🗑️</button>
+                </div>
+            </div>
+            <button class="add-subject-btn">Add subject ➕</button>
+        </section>
+
+        <!-- Task Section -->
+        <section class="task-section">
+            <h2>Task</h2>
+            <div class="task-list">
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Priority</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>Lab 8</td>
+                        <td>Maths</td>
+                        <td>High</td>
+                        <td>16/10/2024</td>
+                        <td>
+                            <button class="edit-btn">✏️</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <button class="add-task-btn">Add task ➕</button>
+        </section>
+
+        <!-- detalles de seccion -->
+        <section class="details-section">
+            <h2>Details</h2>
+            <div class="details-box">
+                <h3>Lab 8</h3>
+                <p>No details</p>
+            </div>
+            <div class="completed-tasks">
+                <h3>Completed</h3>
+                <details>
+                    <summary>Lab 8</summary>
+                    <!-- Info adicional -->
+                </details>
+                <details>
+                    <summary>Foro 1.5</summary>
+                </details>
+            </div>
+            <div class="archived-tasks">
+                <h3>Archived</h3>
+                <details>
+                    <summary>Lab 8</summary>
+                </details>
+                <details>
+                    <summary>Foro 1.5</summary>
+                </details>
+            </div>
+        </section>
+    </div>
 </body>
-<script src="../register/app.js"></script>
 </html>
