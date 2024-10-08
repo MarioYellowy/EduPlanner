@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar - Subjects -->
+        <section class="sidebar">
+            <h2>Subject</h2>
+            <div class="subject-list">
+                <div class="subject-card green">
+                    <div class="subject-info">
+                        <h3>Databases II</h3>
+                        <p>Lunes-Viernes <br> 10:00 - 12:00</p>
+                    </div>
+                    <button class="delete-btn">🗑️</button>
+                </div>
+                <div class="subject-card pink">
+                    <div class="subject-info">
+                        <h3>Networks</h3>
+                        <p>Tuesday <br> 14:00 - 16:00</p>
+                    </div>
+                    <button class="delete-btn">🗑️</button>
+                </div>
+                <div class="subject-card blue">
+                    <div class="subject-info">
+                        <h3>English</h3>
+                        <p>Friday <br> 13:00 - 14:00</p>
+                    </div>
+                    <button class="delete-btn">🗑️</button>
+                </div>
+            </div>
+            <button class="add-subject-btn">Add subject ➕</button>
+        </section>
+
+        <!-- Task Section -->
+        <section class="task-section">
+            <h2>Task</h2>
+            <div class="task-list">
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Priority</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>Lab 8</td>
+                        <td>Maths</td>
+                        <td>High</td>
+                        <td>16/10/2024</td>
+                        <td>
+                            <button class="edit-btn">✏️</button>
+                        </td>
+                    </tr>
+                    <!-- Add more tasks similarly -->
+                </table>
+            </div>
+            <button class="add-task-btn">Add task ➕</button>
+        </section>
+
+        <!-- Details Section -->
+        <section class="details-section">
+            <h2>Details</h2>
+            <div class="details-box">
+                <h3>Lab 8</h3>
+                <p>No details</p>
+            </div>
+            <div class="completed-tasks">
+                <h3>Completed</h3>
+                <details>
+                    <summary>Lab 8</summary>
+                    <!-- Additional info here -->
+                </details>
+                <details>
+                    <summary>Foro 1.5</summary>
+                </details>
+            </div>
+            <div class="archived-tasks">
+                <h3>Archived</h3>
+                <details>
+                    <summary>Lab 8</summary>
+                </details>
+                <details>
+                    <summary>Foro 1.5</summary>
+                </details>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
