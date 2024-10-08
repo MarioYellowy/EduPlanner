@@ -56,11 +56,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const userData = await userValidate(userlog); 
 
         if (userData) {   
-            console.log("Datos del usuario después de la validación:", userData);  
+            currentUserData = userData 
             
         } else {  
             console.log("Error en la validación o no se encontraron datos.");  
         }  
-    });  
+    });
+  
 });
+
+
 
