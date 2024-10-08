@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log('Datos del usuario:', data_user);  
 
                     currentUserData = data_user;
-                   // window.location.href = '../home/home.html'; 
+                    window.location.href = '../home/home.html'; 
                     return data_user; 
                 } else {  
                     console.log(`Fallo en la validación: ${message_out}`);  
