@@ -17,13 +17,13 @@
             <h1 class="welcome_text">WELCOME !!!</h1>
         </div>
         <div class="login_container">
-            <form action="summit">
+            <form id="loginForm">
                 <img src="../img/Generic avatar.png" class="avatar" alt="">
-                <label for="username">EMAIL</label>
-                <input type="text">
-                <label for="password">PASSWORD</label>
-                <input type="text">
-                <button for="login" type="submit">Login</button>
+                <label for="user_e">EMAIL</label>
+                <input type="text" id="user_e">
+                <label for="user_pas">PASSWORD</label>
+                <input type="password" id="user_pas">
+                <button for="login" type="submit" id="buttonValidate">Login</button>
                 <a href="../forgotPass/forgotPass.html" class="forgot_password" id="forgot_password">
                     <label for="forgot_password" class="forgot_text" >Forgot password</label>
                 </a>
@@ -37,5 +37,6 @@
     <footer class="footer_container">
         <p>&copy; 2024 EduPlanner_Team</p>
     </footer>
+    <script src="./login.js" type="module"></script>
 </body>
 </html>
