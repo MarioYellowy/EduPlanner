@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: #b0d9da;
     color: #333;
 }
@@ -39,6 +39,9 @@ body {
 h2 {
     margin-bottom: 20px;
     color: #000;
+    font-family: 'Inter', sans-serif;
+    font-style: italic;
+    font-weight: bold;
 }
 
 .subject-list, .task-list, .details-box {
@@ -124,4 +127,23 @@ details {
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background-color: #5FAAB1;
+    color: #FFFFFF;
+    border-style: none;
+    border-radius: 1.5rem;
+    width: 50%;
+    height: 2.5rem;
+    font-size: 24px;
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+button:hover {
+    background-color: #4b8f95; 
+    transform: scale(1.05);
 }
