@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function createUser(new_user) {
         try {
             const conn = await getConnection();
-            const result = await conn.query('CALL Register(?, ?, ?)', [new_user.username, new_user.email_user, new_user.password_user]); // Ajusta los parámetros según corresponda  
+            const result = await conn.query('CALL Register(?, ?, ?)', [new_user.username, new_user.email_user, new_user.password_user]); 
 
             const NOTIFICATION_TITLE = 'EduPlanner TO-DO';
             const NOTIFICATION_BODY = 'User added successfully';
