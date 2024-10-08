@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #b0d9da;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    height: 100vh;
+}
+
+.sidebar, .task-section, .details-section {
+    background-color: #e0f7f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar {
+    width: 25%;
+}
+
+.task-section {
+    width: 35%;
+}
+
+.details-section {
+    width: 30%;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.subject-list, .task-list, .details-box {
+    margin-bottom: 20px;
+}
+
+.subject-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #fff;
+}
+
+.subject-card.green {
+    background-color: #91c788;
+}
+
+.subject-card.pink {
+    background-color: #f78ba7;
+}
+
+.subject-card.blue {
+    background-color: #8cb3ff;
+}
+
+.subject-info h3 {
+    margin-bottom: 5px;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.add-subject-btn, .add-task-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #61b6f5;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.add-subject-btn:hover, .add-task-btn:hover {
+    background-color: #4da0d3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+.details-box {
+    background-color: #83bcc6;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.completed-tasks, .archived-tasks {
+    margin-top: 20px;
+}
+
+details {
+    margin-bottom: 10px;
+    background-color: #e0f7f9;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background-color: #5FAAB1;
+    color: #FFFFFF;
+    border-style: none;
+    border-radius: 1.5rem;
+    width: 50%;
+    height: 2.5rem;
+    font-size: 24px;
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+button:hover {
+    background-color: #4b8f95; 
+    transform: scale(1.05);
+}
