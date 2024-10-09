@@ -3,6 +3,14 @@ const { getConnection } = require("../../database");
 
 document.addEventListener('DOMContentLoaded', () => {
     const userForm = document.getElementById('userForm');
+
+    const backButton = document.getElementById('backButton'); // Selecciono el botón
+
+     // Lógica del botón de "volver atrás"
+     backButton.addEventListener('click', () => {
+        window.history.back();  // Volver a la página anterior
+    });
+
     async function createUser(new_user) {
         try {
             const conn = await getConnection();
