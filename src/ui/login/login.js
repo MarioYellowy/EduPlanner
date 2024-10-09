@@ -20,15 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(isValid, userId, message_out);  
 
                 if (isValid) {  
-                    currentUserId = userId;  
-                    const data_user = await conn.query('CALL GetDataOfUser(?)', [userId]);  
-
+                    currentUserId = userId;
                     console.log(`Inicio de sesión exitoso: ${message_out}`);  
-                    console.log('Datos del usuario:', data_user);  
-
-                    currentUserData = data_user;
-                    window.location.href = '../home/home.html'; 
-                    return data_user; 
+                    window.location.href = '../home/home.html';
+                    return currentUserId 
                 } else {  
                     console.log(`Fallo en la validación: ${message_out}`);  
                     return null; 
@@ -56,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const userData = await userValidate(userlog); 
 
         if (userData) {   
-            currentUserData = userData 
+            console.log(userData)
             
         } else {  
             console.log("Error en la validación o no se encontraron datos.");  
