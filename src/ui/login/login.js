@@ -1,64 +1,58 @@
 const { getConnection } = require("../../database");  
-let currentUserId = null;  
-let currentUserData = null; 
-
-const loginForm = document.getElementById('loginForm');  
+const { comparePasswords } = require('../../encrypt.js'); 
 
 document.addEventListener('DOMContentLoaded', () => {  
     async function userValidate(userlog) {  
         let conn;  
         try {  
-            conn = await getConnection(); 
-            const result_validate = await conn.query('CALL ValidateLogin(?, ?)', [userlog.email_user, userlog.password_user]);  
-            console.log(userlog.email_user,userlog.password_user)
-            console.log(result_validate[0][0])
-
-            console.log('Resultado de Validar:', result_validate);  
+            conn = await getConnection();  
+            const result_validate = await conn.query('CALL ValidateLoginHash(?)', [userlog.email_user]);  
 
             if (result_validate.length > 0 && result_validate[0].length > 0) {  
-                const { isValid, userId, message_out } = result_validate[0][0][0];  
-                console.log(isValid, userId, message_out);  
+                const { hashedPassword, userId, message_out } = result_validate[0][0][0];  
+
+                const isValid = await comparePasswords(userlog.password_user, hashedPassword);  
 
                 if (isValid) {  
-                    currentUserId = userId;
                     console.log(`Inicio de sesión exitoso: ${message_out}`);  
-                    window.location.href = '../home/home.html';
-                    return currentUserId 
+                    return userId;  
                 } else {  
                     console.log(`Fallo en la validación: ${message_out}`);  
-                    return null; 
+                    return null;  
                 }  
             } else {  
                 console.log("No se recibieron resultados de la validación.");  
-                return null; 
+                return null;  
             }  
         } catch (error) {  
             console.error("Error en la validación:", error);  
-            return null;
+            return null;  
         } finally {  
             if (conn) {  
-                conn.end(); 
+                conn.end();  
             }  
         }  
     }  
 
+    const loginForm = document.getElementById('loginForm');  
     loginForm.addEventListener('submit', async (e) => {  
         e.preventDefault();  
         const userlog = {  
             email_user: document.getElementById('user_e').value,  
             password_user: document.getElementById('user_pas').value  
         };  
-        const userData = await userValidate(userlog); 
 
-        if (userData) {   
-            console.log(userData)
-            
+        if (!userlog.email_user || !userlog.password_user) {  
+            console.log("Por favor, complete todos los campos.");  
+            return;  
+        }  
+
+        const currentUserId = await userValidate(userlog);  
+
+        if (currentUserId != null) {  
+            console.log(`ID de usuario actual: ${currentUserId}`);  
         } else {  
             console.log("Error en la validación o no se encontraron datos.");  
         }  
-    });
-  
+    });  
 });
-
-
-
