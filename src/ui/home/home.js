@@ -7,7 +7,7 @@ document.getElementById('logout-btn').addEventListener('click', function(event) 
         event.preventDefault(); // Evita cualquier acción predeterminada
     } else {
         console.log("Cerrando sesión...");
-        // redirigir a la página de inicio de sesión
-        window.location.href = "/login";
+        // redirige a la página de inicio de sesión
+        window.location.href = "../login/login.html";
     }
 });
