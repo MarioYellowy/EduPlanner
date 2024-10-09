@@ -129,3 +129,22 @@ input[type="password"] {
     height: 3rem;
     left: 0;
 }
+
+/* estilos para la flecha de volver atras */
+.back-button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: #1A2C32;
+    cursor: pointer;
+    margin: 1rem;
+    padding-left: 1rem;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-family: inter;
+}
+
+.back-button:hover {
+    color: #4b8f95; /* Cambiar color al hacer hover */
+}
