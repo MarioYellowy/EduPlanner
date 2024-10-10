@@ -141,6 +141,7 @@ input[type="password"] {
 
 .welcome_container {
     background-image: url("../img/fondo.png");
+    background-size: contain;
     width: 46%;
     height: 70vh;
     display: flex;
