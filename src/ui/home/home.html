@@ -14,7 +14,7 @@
         <section class="sidebar"> <!-- Subject Section -->
             <h2>Subject</h2>
             <div class="subject-container">
-                <section class="name-colum">
+                <section class="name-colum-subject">
                     <label for="Name">Name</label>
                     <label for="Date">Date</label>
                     <img src="../img/filter.png" for="filter_icon">
@@ -22,7 +22,7 @@
                 <div class="subject-list">
                     <div class="subject-card green">
                         <div class="subject-info">
-                            <p for="subject1">Subject1</p>
+                            <p for="subject1">Database II</p>
                             <p for="schedule">Lunes-Viernes <br> 10:00-12:00</p>
                         </div>
                         <button class="delete-btn">
@@ -38,28 +38,35 @@
         </section>
         <section class="task-section"> <!-- Task Section -->
             <h2>Task</h2>
-            <div>
-                <div class="task-container">
-                    <div class="task-list">
-                        <table>
-                            <tr>
-                                <th>Name</th>
-                                <th>Category</th>
-                                <th>Priority</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                            </tr>
-                            <tr>
-                                <td>Lab 8</td>
-                                <td>Maths</td>
-                                <td>High</td>
-                                <td>16/10/2024</td>
-                                <td>
-                                    <button class="edit-btn">✏️</button>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+            <div class="task-container">
+                <section class="name-colum-task">
+                    <h3 class="title-task">Databases 2</h3>
+                    <img src="../img/filter.png" for="filter_icon" class="filter-task">
+                </section>
+                <div class="task-list">
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Priority</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th class="edit"></th>
+                        </tr>
+                        <tr>
+                            <td>Lab 8</td>
+                            <td>Maths</td>
+                            <td>High</td>
+                            <td>16/10/2024</td>
+                            <td><input type="checkbox"></td>
+                            <td>
+                                <button class="edit-btn">
+                                    <img src="../img/edit.png" >
+                                </button>
+                            </td>
+                            
+                        </tr>
+                    </table>
                 </div>
             </div>
             <button class="add-subject-btn">
