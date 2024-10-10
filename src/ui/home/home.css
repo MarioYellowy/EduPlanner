@@ -111,11 +111,17 @@ p[for="schedule"] {
     justify-content: space-around;
     font-size: 16px;
     font-weight: bold;
+    transition: transform 0.2s ease, background-color 0.3s ease; 
 }
 
 .add-subject-btn:hover, .add-task-btn:hover {
     background-color: #3D7F86; 
     transform: scale(1.05); 
+}
+
+.add-subject-btn:active, .add-task-btn:active {
+    transform: scale(0.95); 
+    transition: transform 0.1s ease; 
 }
 
 .btn-img {
@@ -166,8 +172,12 @@ table {
     font-size: 0.7rem;
     font-weight: bold;
     border-collapse: separate; 
+    border-spacing: 0;
+    border-radius: 15px;
     border-spacing: 0 1rem;
+    
 }
+
 table tr {
     padding: 1rem;
 }
@@ -178,7 +188,23 @@ table td {
     text-align: center; 
     color: #ffff;
     padding: 0.5rem;
+    border: 1px solid transparent;
 }
+
+table tr td:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+table tr td:nth-last-child(2) {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+table td:last-child {
+    background-color: transparent; 
+}
+
 table input[type="checkbox"] {
     cursor: pointer;
     width: 1.5rem;
@@ -190,8 +216,8 @@ table input[type="checkbox"] {
 }
 
 table input[type="checkbox"]:checked {
-    background-color: #5FAAB1; 
-    border: 2px solid #5FAAB1;
+    background-color: #2D464C; 
+    border: 2px solid #2D464C;
 }
 
 table input[type="checkbox"]:checked::after {
