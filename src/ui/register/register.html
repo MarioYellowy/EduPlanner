@@ -14,7 +14,10 @@
     <hr class="register_line_down">
     <main class="flex_container">
         <!-- Felcha para volver atrás -->
-        <button id="backButton" class="back-button">←Back to Login</button>
+         <a href="../login/login.html">
+            <button id="backButton" class="back-button">←Back to Login</button>
+         </a>
+        
         <div class="welcome_container">
             <h1 class="welcome_text">WELCOME !!!</h1>
         </div>
@@ -32,11 +35,13 @@
             <label for="password">PASSWORD</label>
             <input 
                 type="password" 
-                id="password">
+                id="password"
+                placeholder="Password">
             <label for="confirm_password">CONFIRM PASSWORD</label>
             <input 
                 type="password" 
-                id="confirm_password">
+                id="confirm_password"
+                placeholder="Confirm Password" required>
             <button for="register" type="submit">Register</button>
         </form> 
     </main>
