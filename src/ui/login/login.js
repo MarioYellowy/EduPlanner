@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (isValid) {  
                     console.log(`Inicio de sesión exitoso: ${message_out}`);  
+                    window.location.href = '../home/home.html';
                     return userId;  
                 } else {  
                     console.log(`Fallo en la validación: ${message_out}`);  
