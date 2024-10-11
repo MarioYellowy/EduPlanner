@@ -18,7 +18,6 @@ body {
 
 .sidebar, .task-section, .details-section {
     display: flex;
-    width: 100%;
     flex-direction: column;
     align-items: center;
     background-color: transparent;
@@ -34,6 +33,47 @@ body {
     width: 100%;
     height: 70vh;
     border-radius: 0.5rem;
+}
+
+.details-container {
+    background-color: #DDEFF0;
+    width: 100%;
+    height: 50vh;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.details-info-container {
+    background-color: #5FAAB1;
+    height: 40vh;
+    width: 90%;
+    border-radius: 1rem;
+    align-items: center;
+    margin: 0.2rem;
+}
+
+.home_line_middle {
+    width: 100%; 
+    height: 1vh; 
+    background-color: #2D464C;
+    border: none;   
+    opacity: 1;
+    border-radius: 1rem;
+    margin: 1rem;
+}
+
+.completed-container {
+    background-color: #DDEFF0;
+    width: 100%;
+    height: 22.2vh;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
 }
 
 .name-colum-subject {
