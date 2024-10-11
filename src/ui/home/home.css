@@ -316,3 +316,39 @@ button {
     align-items: center;      
     font-style: italic;     
 }
+
+/* Estilos para el diálogo/modal */  
+.modal {  
+    display: none; /* Oculto por defecto */  
+    position: fixed; /* Fijo */  
+    z-index: 1; /* En la parte superior */  
+    left: 0;  
+    top: 0;  
+    width: 100%; /* Full width */  
+    height: 100%; /* Full height */  
+    overflow: auto; /* Scroll si es necesario */  
+    background-color: rgb(0,0,0); /* Color de fondo */  
+    background-color: rgba(0,0,0,0.4); /* Fondo translúcido */  
+}  
+
+.modal-content {  
+    background-color: #fefefe;  
+    margin: 15% auto; /* 15% desde arriba y centrado */  
+    padding: 20px;  
+    border: 1px solid #888; /* Border */  
+    width: 80%; /* Ancho */  
+}  
+
+.close {  
+    color: #aaa;  
+    float: right;  
+    font-size: 28px;  
+    font-weight: bold;  
+}  
+
+.close:hover,  
+.close:focus {  
+    color: black;  
+    text-decoration: none;  
+    cursor: pointer;  
+}
