@@ -316,8 +316,7 @@ button {
     align-items: center;      
     font-style: italic;     
 }
-
-/* Estilos para el diálogo/modal */  
+ 
 .modal {
     display: none; 
     position: fixed; 
@@ -330,9 +329,9 @@ button {
     background-color: rgba(0, 0, 0, 0.4);
     justify-content: center; 
     align-items: center; 
-    opacity: 0; /* Inicialmente invisible */
-    transform: translateY(-20px); /* Inicialmente desplazado hacia arriba */
-    transition: opacity 0.3s ease, transform 0.3s ease; /* Transición suave */
+    opacity: 0; 
+    transform: translateY(-20px); 
+    transition: opacity 0.3s ease, transform 0.3s ease; 
 }
 
 .modal-content {
@@ -359,72 +358,62 @@ button {
 }
 
 .modal-content {
-    border-radius: 8px; /* Bordes redondeados para el modal */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para el modal */
+    border-radius: 8px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
 }
 
-/* Estilo para cerrar el modal */
 .close {
-    transition: color 0.3s ease; /* Transición suave para el color */
+    transition: color 0.3s ease; 
 }
 
 .close:hover {
-    color: #FF5252; /* Cambiar color al pasar el ratón */
+    color: #FF5252; 
 }
 
-/* Efecto de fondo en el contenedor del modal */
 .modal {
-    backdrop-filter: blur(5px); /* Desenfoque del fondo del modal */
+    backdrop-filter: blur(5px); 
 }
 
-/* Estilo general para el formulario */
 #addSubjectForm {
-    display: flex; /* Usar flexbox para la disposición */
-    flex-direction: column; /* Colocar los elementos en columna */
-    gap: 15px; /* Espaciado entre los elementos */
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
 }
 
-/* Estilo para las etiquetas del formulario */
 #addSubjectForm label {
-    font-weight: bold; /* Texto en negrita para las etiquetas */
-    color: #333; /* Color de texto */
+    font-weight: bold; 
+    color: #333; 
 }
 
-/* Estilo para los campos de entrada */
 #addSubjectForm input[type="text"],
 #addSubjectForm input[type="date"],
 #addSubjectForm button {
-    padding: 10px; /* Espaciado interno */
-    border: 1px solid #B2DFDB; /* Borde delgado y claro */
-    border-radius: 4px; /* Bordes redondeados */
-    font-size: 1rem; /* Tamaño de fuente */
+    padding: 10px; 
+    border: 1px solid #B2DFDB; 
+    border-radius: 4px; 
+    font-size: 1rem; 
 }
 
-/* Estilo para el campo de texto */
 #addSubjectForm input[type="text"] {
-    width: 100%; /* Ancho completo */
+    width: 100%; 
 }
 
-/* Estilo para el campo de fecha */
 #addSubjectForm input[type="date"] {
-    width: 100%; /* Ancho completo */
+    width: 100%; 
 }
 
-/* Estilo para el botón de envío */
 #addSubjectForm button {
-    background-color: #00796B; /* Color de fondo del botón */
-    color: #FFFFFF; /* Color del texto del botón */
-    border: none; /* Sin borde */
-    cursor: pointer; /* Cambiar cursor al pasar el ratón */
-    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+    background-color: #00796B; 
+    color: #FFFFFF; 
+    border: none; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
 }
 
-/* Efecto al pasar el ratón sobre el botón */
 #addSubjectForm button:hover {
-    background-color: #004D40; /* Cambiar color al pasar el ratón */
+    background-color: #004D40; 
 }
 
-/* Estilo para el campo de fecha final */
 #addSubjectForm input[name="subjectDateEnd"] {
-    width: 100%; /* Ancho completo */
+    width: 100%; 
 }
