@@ -318,26 +318,31 @@ button {
 }
 
 /* Estilos para el diálogo/modal */  
-.modal {  
-    display: none; /* Oculto por defecto */  
-    position: fixed; /* Fijo */  
-    z-index: 1; /* En la parte superior */  
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
     left: 0;  
     top: 0;  
-    width: 100%; /* Full width */  
-    height: 100%; /* Full height */  
-    overflow: auto; /* Scroll si es necesario */  
-    background-color: rgb(0,0,0); /* Color de fondo */  
-    background-color: rgba(0,0,0,0.4); /* Fondo translúcido */  
-}  
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center; 
+    align-items: center; 
+    opacity: 0; /* Inicialmente invisible */
+    transform: translateY(-20px); /* Inicialmente desplazado hacia arriba */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Transición suave */
+}
 
-.modal-content {  
+.modal-content {
     background-color: #fefefe;  
-    margin: 15% auto; /* 15% desde arriba y centrado */  
     padding: 20px;  
-    border: 1px solid #888; /* Border */  
-    width: 80%; /* Ancho */  
-}  
+    border: 1px solid #888; 
+    width: 80%; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+}
 
 .close {  
     color: #aaa;  
@@ -351,4 +356,75 @@ button {
     color: black;  
     text-decoration: none;  
     cursor: pointer;  
+}
+
+.modal-content {
+    border-radius: 8px; /* Bordes redondeados para el modal */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para el modal */
+}
+
+/* Estilo para cerrar el modal */
+.close {
+    transition: color 0.3s ease; /* Transición suave para el color */
+}
+
+.close:hover {
+    color: #FF5252; /* Cambiar color al pasar el ratón */
+}
+
+/* Efecto de fondo en el contenedor del modal */
+.modal {
+    backdrop-filter: blur(5px); /* Desenfoque del fondo del modal */
+}
+
+/* Estilo general para el formulario */
+#addSubjectForm {
+    display: flex; /* Usar flexbox para la disposición */
+    flex-direction: column; /* Colocar los elementos en columna */
+    gap: 15px; /* Espaciado entre los elementos */
+}
+
+/* Estilo para las etiquetas del formulario */
+#addSubjectForm label {
+    font-weight: bold; /* Texto en negrita para las etiquetas */
+    color: #333; /* Color de texto */
+}
+
+/* Estilo para los campos de entrada */
+#addSubjectForm input[type="text"],
+#addSubjectForm input[type="date"],
+#addSubjectForm button {
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #B2DFDB; /* Borde delgado y claro */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 1rem; /* Tamaño de fuente */
+}
+
+/* Estilo para el campo de texto */
+#addSubjectForm input[type="text"] {
+    width: 100%; /* Ancho completo */
+}
+
+/* Estilo para el campo de fecha */
+#addSubjectForm input[type="date"] {
+    width: 100%; /* Ancho completo */
+}
+
+/* Estilo para el botón de envío */
+#addSubjectForm button {
+    background-color: #00796B; /* Color de fondo del botón */
+    color: #FFFFFF; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Cambiar cursor al pasar el ratón */
+    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+}
+
+/* Efecto al pasar el ratón sobre el botón */
+#addSubjectForm button:hover {
+    background-color: #004D40; /* Cambiar color al pasar el ratón */
+}
+
+/* Estilo para el campo de fecha final */
+#addSubjectForm input[name="subjectDateEnd"] {
+    width: 100%; /* Ancho completo */
 }
