@@ -3,11 +3,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const { getConnection } = require("../../database");
     let currentUserId;
 
-    // Botones y modal para agregar materia  
     const btn_addSubject = document.querySelector(".add-subject-btn");
     const span = document.getElementById("closeModal");
     const modal = document.getElementById('addSubjectModal');
+    const sidebarMenu = document.getElementById("sidebar"); 
+    const sidepanel = document.getElementById("sidepanel");
+    const btn_logout = document.getElementById("logoutBtn");
     
+    btn_logout.addEventListener('click', () => {
+        ipcRenderer.send('logout');
+    });
     // Botones del modal para transiciones suaves
     const openModalBtn = document.querySelector('#openModalBtn');
     const closeModalBtn = document.querySelector('.close');
@@ -16,8 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         currentUserId = userId;
         console.log('ID de usuario recibido en home:', currentUserId);
         useCurrentUserId();
-
-        // Bloque para agregar materias  
+ 
         btn_addSubject.addEventListener('click', async () => {
             if (modal) {
                 await openAddSubject(modal);
@@ -25,19 +29,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error('Modal no encontrado');
             }
         });
-
         span.onclick = function () {
-            closeModal();  // Uso de la función closeModal con transición
+            modal.classList.remove("show");
         }
     });
 
-    function useCurrentUserId() {
-        if (currentUserId) {
-            console.log('Usando ID de usuario:', currentUserId);
-        } else {
-            console.log('currentUserId aún no está definido.');
-        }
+    sidebarMenu.addEventListener('click', () => {
+        toggleMenu(); 
+    });
+
+    function toggleMenu() {
+        sidepanel.classList.toggle("open"); 
     }
+
+    function useCurrentUserId() {  
+        if (currentUserId) {  
+            console.log('Usando ID de usuario:', currentUserId);  
+        } else {  
+            console.log('currentUserId aún no está definido.');  
+        }  
+    }  
 
     async function addSubject(id_user, subjectName, subjectDateStart, subjectDateEnd) {
         const conn = await getConnection();
@@ -51,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function openAddSubject(modal) {
         return new Promise((resolve) => {
-            openModal();  // Uso la función openModal para mostrar con transición
+            modal.style.display = "block";
             document.getElementById("addSubjectForm").onsubmit = async function (event) {
                 event.preventDefault();
                 let subjectName = document.getElementById('subjectName').value;
@@ -61,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 await addSubject(currentUserId, subjectName, subjectDateStart, subjectDateEnd);
 
                 event.target.reset();
+                modal.classList.remove("show");
                 closeModal();  // Uso la función closeModal para cerrar con transición
             };
             resolve();
@@ -89,3 +101,4 @@ document.addEventListener("DOMContentLoaded", () => {
     if (openModalBtn) openModalBtn.addEventListener('click', openModal);
     if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
 });
+

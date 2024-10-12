@@ -11,6 +11,14 @@
 </head>
 <body>
     <div class="container">
+        <div id="sidebar" class="sidebar_menu" >
+            &#9776;
+        </div>
+        <div id="sidepanel" class="sidepanel">
+            <a href="#">Account</a>
+            <a href="#">History</a>
+            <button id="logoutBtn" class="closebtn">Log out <img src="../img/logout.png"></button>
+        </div>
         <section class="sidebar"> <!-- Subject Section -->
             <h2>Subject</h2>
             <div class="subject-container">
@@ -93,8 +101,14 @@
             </div>
             <hr class="home_line_middle">
             <div class="completed-container">
-                <h3>Completed</h3>
-                <div></div>
+                <div class="completed-title">
+                    <h3>Completed</h3>
+                <img src="../img/arrow_down.png" class="arrow down">
+                </div>
+                <div class="task-completed">
+                    <label class="task-completed-example">Lab 8</label>
+                    <img src="../img/arrow_drop_down.png" class="drop_down_img">
+                </div>
             </div>
         </section>
     </div>
