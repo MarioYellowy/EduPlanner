@@ -11,11 +11,13 @@
 </head>
 <body>
     <div class="container">
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
-        <div id="sidebar_menu" class="sidebar_menu">
-            <a href="#">Acount</a>
+        <div id="sidebar" class="sidebar_menu" >
+            &#9776;
+        </div>
+        <div id="sidepanel" class="sidepanel">
+            <a href="#">Account</a>
             <a href="#">History</a>
-            <a href="javascript:void(0)" class="close-btn-sidebar" onclick="toggleMenu()"></a>
+            <button id="logoutBtn" class="closebtn">Log out <img src="../img/logout.png"></button>
         </div>
         <section class="sidebar"> <!-- Subject Section -->
             <h2>Subject</h2>

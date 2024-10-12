@@ -3,18 +3,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const { getConnection } = require("../../database");
     let currentUserId;
 
-    // Botones y modal para agregar materia  
     const btn_addSubject = document.querySelector(".add-subject-btn");
     const span = document.getElementById("closeModal");
     const modal = document.getElementById('addSubjectModal');
+    const sidebarMenu = document.getElementById("sidebar"); 
+    const sidepanel = document.getElementById("sidepanel");
+    const btn_logout = document.getElementById("logoutBtn");
 
+    btn_logout.addEventListener('click', () => {
+        ipcRenderer.send('logout');
+    });
 
     ipcRenderer.on('set-user-id', (event, userId) => {
         currentUserId = userId;
         console.log('ID de usuario recibido en home:', currentUserId);
         useCurrentUserId();
-
-        // Bloque para agregar materias  
+ 
         btn_addSubject.addEventListener('click', async () => {
             if (modal) {
                 await openAddSubject(modal);
@@ -22,30 +26,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error('Modal no encontrado');
             }
         });
-
         span.onclick = function () {
-            modal.style.display = "none";
+            modal.classList.remove("show");
         }
     });
 
-function useCurrentUserId() {  
-    if (currentUserId) {  
-        console.log('Usando ID de usuario:', currentUserId);  
-    } else {  
-        console.log('currentUserId aún no está definido.');  
-    }  
-}  
+    sidebarMenu.addEventListener('click', () => {
+        toggleMenu(); 
+    });
 
-function toggleMenu() {
-    const sidebar = document.getElementById("sidebar_menu");
-    sidebar.classList.toggle("open");
-}
+    function toggleMenu() {
+        sidepanel.classList.toggle("open"); 
+    }
+
+    function useCurrentUserId() {  
+        if (currentUserId) {  
+            console.log('Usando ID de usuario:', currentUserId);  
+        } else {  
+            console.log('currentUserId aún no está definido.');  
+        }  
+    }  
 
     async function addSubject(id_user, subjectName, subjectDateStart, subjectDateEnd) {
         const conn = await getConnection();
-
         try {
-
             await conn.query('CALL addSubject(?,?,?,?,?)', [id_user, subjectName, subjectDateStart, subjectDateEnd, 1]);
             console.log('Nueva materia agregada:', subjectName, 'Fecha inicio:', subjectDateStart, 'Fecha fin:', subjectDateEnd);
         } catch (error) {
@@ -66,7 +70,7 @@ function toggleMenu() {
                 await addSubject(currentUserId, subjectName, subjectDateStart, subjectDateEnd);
 
                 event.target.reset();
-                modal.style.display = "none";
+                modal.classList.remove("show");
             };
             resolve();
         });

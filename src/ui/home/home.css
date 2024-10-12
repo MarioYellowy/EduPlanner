@@ -11,59 +11,97 @@ body {
 }
 
 .sidebar_menu {
-    height: 100%;
-    width: 0;
+    display: flex;
+    flex-direction: column;
     position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #333;
-    overflow-x: hidden;
-    transition: width 0.5s;
-    padding-top: 60px;
-    transition: width 0.5s;
+    width: 2.5%;
+    height: 5vh;
+    background-color: #2D464C;
+    margin-top: 1.3rem;
+    right: 0;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    color: #BFE0E2;
+    border-radius: 0.5rem;
+    font-size: 1.6rem;
+    z-index: 1;
 }
 
-.sidebar_menu.open {
-    width: 250px;
+.sidepanel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 25%; 
+    width: 0; 
+    position: fixed;
+    top: 3rem;
+    right: 0;
+    background-color: #2D464C;
+    overflow-x: hidden; 
+    transition: width 0.5s ease; 
+    border-radius: 1rem;
 }
 
-.sidebar_menu a {
-    padding: 10px 15px;
+.sidepanel.open {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 3rem;
+    width: 8rem;
+    border-radius: 1rem;
+}
+
+.sidepanel a {
+    padding: 1rem;
     text-decoration: none;
-    font-size: 25px;
-    color: #fff;
+    font-size: 1rem;
+    color: #BFE0E2;
     display: block;
     transition: 0.3s;
 }
 
-.sidebar_menu a:hover {
-    background-color: #575757;
+.sidepanel a:hover {
+    color: #f1f1f1;
 }
 
-.sidebar_menu .close-btn-sidebar {
-    position: absolute;
-    top: 10px;
+.closebtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    top: 0;
     right: 25px;
-    font-size: 36px;
-    color: #fff;
+    font-size: 1rem;
+    background-color: #5FAAB1;
+    border-radius: 0.5rem;
+    color: #ffff;
+    width: 80%;
 }
 
-.close-btn-sidebar {
-    width: 50%;
-    height: 10vh;
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
 }
 
-.menu-btn {
-    font-size: 30px;
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
+.modal.show {
+    display: block; 
 }
 
-.menu-btn:hover {
-    background-color: #005f73;
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
 }
 
 .container {
@@ -300,7 +338,6 @@ table {
     border-spacing: 0;
     border-radius: 15px;
     border-spacing: 0 1rem;
-    
 }
 
 table tr {
@@ -402,26 +439,25 @@ button {
     font-style: italic;     
 }
 
-/* Estilos para el diálogo/modal */  
 .modal {  
-    display: none; /* Oculto por defecto */  
-    position: fixed; /* Fijo */  
-    z-index: 1; /* En la parte superior */  
+    display: none;  
+    position: fixed;  
+    z-index: 1;  
     left: 0;  
     top: 0;  
-    width: 100%; /* Full width */  
-    height: 100%; /* Full height */  
-    overflow: auto; /* Scroll si es necesario */  
-    background-color: rgb(0,0,0); /* Color de fondo */  
-    background-color: rgba(0,0,0,0.4); /* Fondo translúcido */  
+    width: 100%; 
+    height: 100%;   
+    overflow: auto;  
+    background-color: rgb(0,0,0);  
+    background-color: rgba(0,0,0,0.4);  
 }  
 
 .modal-content {  
     background-color: #fefefe;  
-    margin: 15% auto; /* 15% desde arriba y centrado */  
+    margin: 15% auto; 
     padding: 20px;  
-    border: 1px solid #888; /* Border */  
-    width: 80%; /* Ancho */  
+    border: 1px solid #888; 
+    width: 80%; 
 }  
 
 .close {  
@@ -431,8 +467,7 @@ button {
     font-weight: bold;  
 }  
 
-.close:hover,  
-.close:focus {  
+.close:hover, .close:focus {  
     color: black;  
     text-decoration: none;  
     cursor: pointer;  
