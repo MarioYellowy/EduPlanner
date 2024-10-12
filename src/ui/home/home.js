@@ -52,25 +52,30 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             await conn.query('CALL addSubject(?,?,?,?,?)', [id_user, subjectName, subjectDateStart, subjectDateEnd, 1]);
             console.log('Nueva materia agregada:', subjectName, 'Fecha inicio:', subjectDateStart, 'Fecha fin:', subjectDateEnd);
+            return true; 
         } catch (error) {
             console.error('Error al agregar la materia:', error);
+            return false; 
         }
     }
 
     function openAddSubject(modal) {
         return new Promise((resolve) => {
-            modal.style.display = "block";
+            modal.classList.add("show"); 
             document.getElementById("addSubjectForm").onsubmit = async function (event) {
                 event.preventDefault();
-
+    
                 let subjectName = document.getElementById('subjectName').value;
                 let subjectDateStart = document.getElementById('subjectDate').value;
                 let subjectDateEnd = document.getElementById('subjectDateEnd').value;
-
-                await addSubject(currentUserId, subjectName, subjectDateStart, subjectDateEnd);
-
-                event.target.reset();
-                modal.classList.remove("show");
+    
+                let success = await addSubject(currentUserId, subjectName, subjectDateStart, subjectDateEnd);
+                if (success) {
+                    event.target.reset(); 
+                    modal.classList.remove("show"); 
+                } else {
+                    alert('Error al agregar la materia. Por favor, inténtalo de nuevo.');
+                }
             };
             resolve();
         });

@@ -81,27 +81,38 @@ body {
 
 .modal {
     display: none; 
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    position: fixed; 
+    z-index: 1; 
+    left: 0;  
+    top: 0;  
+    width: 100%; 
+    height: 100vh; 
     overflow: auto; 
-    background-color: rgb(0,0,0); 
-    background-color: rgba(0,0,0,0.4); 
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center; 
+    align-items: center; 
+    opacity: 1; 
+    transform: translateY(-20px); 
+    transition: opacity 0.3s ease, transform 0.3s ease; 
+    backdrop-filter: blur(5px);
+} 
+.modal-tittle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .modal.show {
-    display: block; 
+    display: flex; 
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; 
-    padding: 20px;
-    border: 1px solid #888;
+    background-color: #fefefe;  
+    padding: 20px;  
+    border: 1px solid #888; 
     width: 80%; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
 }
 
 .container {
@@ -439,36 +450,68 @@ button {
     font-style: italic;     
 }
 
-.modal {  
-    display: none;  
-    position: fixed;  
-    z-index: 1;  
-    left: 0;  
-    top: 0;  
-    width: 100%; 
-    height: 100%;   
-    overflow: auto;  
-    background-color: rgb(0,0,0);  
-    background-color: rgba(0,0,0,0.4);  
-}  
-
-.modal-content {  
-    background-color: #fefefe;  
-    margin: 15% auto; 
-    padding: 20px;  
-    border: 1px solid #888; 
-    width: 80%; 
-}  
-
 .close {  
-    color: #aaa;  
-    float: right;  
-    font-size: 28px;  
-    font-weight: bold;  
-}  
-
-.close:hover, .close:focus {  
-    color: black;  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;    
     text-decoration: none;  
     cursor: pointer;  
+    transition: color 0.3s ease;
+    width: 1rem;
+    height: 2vh;
+    font-size: 3rem;
+} 
+
+.close:hover, .close:focus {
+    color: #f00; 
+    transform: scale(1.1); 
+}
+
+.close:active {
+    transform: scale(0.9); 
+}
+
+#addSubjectForm {
+    display: flex;
+    flex-direction: column; 
+    gap: 15px; 
+}
+
+#addSubjectForm label {
+    font-weight: bold; 
+    color: #333; 
+}
+
+#addSubjectForm input[type="text"],
+#addSubjectForm input[type="date"],
+#addSubjectForm button {
+    padding: 10px; 
+    border: 1px solid #B2DFDB; 
+    border-radius: 4px; 
+    font-size: 1rem; 
+}
+
+#addSubjectForm input[type="text"] {
+    width: 100%; 
+}
+
+#addSubjectForm input[type="date"] {
+    width: 100%; 
+}
+
+#addSubjectForm button {
+    background-color: #00796B; 
+    color: #FFFFFF; 
+    border: none; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
+#addSubjectForm button:hover {
+    background-color: #004D40; 
+}
+
+#addSubjectForm input[name="subjectDateEnd"] {
+    width: 100%; 
 }
