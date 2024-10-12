@@ -19,7 +19,6 @@ function createWindow() {
     ipcMain.on('user-logged-in', (event, userId) => {  
         console.log('ID de usuario recibido en main:', userId);   
         createHomeWindow(userId);  
-
     });  
 }  
 

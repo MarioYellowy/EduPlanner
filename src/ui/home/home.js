@@ -14,3 +14,8 @@ function useCurrentUserId() {
         console.log('currentUserId aún no está definido.');  
     }  
 }  
+
+function toggleMenu() {
+    const sidebar = document.getElementById("sidebar_menu");
+    sidebar.classList.toggle("open");
+}
