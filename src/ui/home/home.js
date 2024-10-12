@@ -26,18 +26,20 @@ document.addEventListener("DOMContentLoaded", () => {
         span.onclick = function () {
             modal.style.display = "none";
         }
-
-
     });
 
-    function useCurrentUserId() {
-        if (currentUserId) {
-            console.log('Usando ID de usuario:', currentUserId);
-        } else {
-            console.log('currentUserId aún no está definido.');
-        }
-    }
+function useCurrentUserId() {  
+    if (currentUserId) {  
+        console.log('Usando ID de usuario:', currentUserId);  
+    } else {  
+        console.log('currentUserId aún no está definido.');  
+    }  
+}  
 
+function toggleMenu() {
+    const sidebar = document.getElementById("sidebar_menu");
+    sidebar.classList.toggle("open");
+}
 
     async function addSubject(id_user, subjectName, subjectDateStart, subjectDateEnd) {
         const conn = await getConnection();
@@ -54,19 +56,14 @@ document.addEventListener("DOMContentLoaded", () => {
     function openAddSubject(modal) {
         return new Promise((resolve) => {
             modal.style.display = "block";
-
-
             document.getElementById("addSubjectForm").onsubmit = async function (event) {
                 event.preventDefault();
-
 
                 let subjectName = document.getElementById('subjectName').value;
                 let subjectDateStart = document.getElementById('subjectDate').value;
                 let subjectDateEnd = document.getElementById('subjectDateEnd').value;
 
-
                 await addSubject(currentUserId, subjectName, subjectDateStart, subjectDateEnd);
-
 
                 event.target.reset();
                 modal.style.display = "none";
