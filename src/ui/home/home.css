@@ -18,7 +18,7 @@ body {
     height: 5vh;
     background-color: #2D464C;
     margin-top: 1.3rem;
-    right: 0;
+    right: 1rem;
     cursor: pointer;
     justify-content: center;
     align-items: center;
@@ -96,6 +96,7 @@ body {
     transition: opacity 0.3s ease, transform 0.3s ease; 
     backdrop-filter: blur(5px);
 } 
+
 .modal-tittle {
     display: flex;
     flex-direction: row;
@@ -242,35 +243,15 @@ p[for="schedule"] {
     margin-right: 5rem;
 }
 
-.subject-info {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    text-align: center;
-    font-weight: bold;
-    color: #000;
-    width: 100%;
-    font-size: 0.79rem;
-}
-
-.delete-btn {
-    background-color: transparent;
-    padding-right: 0.5rem;
-}
-
-.delete-btn img {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border: none;
+button {
+    border-style: none;
+    border-radius: 1.5rem;
+    height: 2.5rem;
+    font-size: 24px;
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
-    width: 2rem;
-    height: 2rem;
-}
-
-.delete-btn:hover img {
-    content: url('../img/trash-white.png'); 
+    margin-top: 1rem;
 }
 
 .add-subject-btn, .add-task-btn {
@@ -319,13 +300,72 @@ h2 {
 .subject-card {
     display: flex;
     flex-direction: row;
-    margin-bottom: 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
     border-radius: 10px;
+    height: 10vh;
+    cursor: pointer;
+}
+
+.subject-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    font-weight: bold;
+    color: #000;
+    width: 100%;
+    font-size: 0.79rem;
+}
+
+.delete-btn:hover img {
+    content: url('../img/trash-white.png'); 
 }
 
 .subject-card.green {
     background-color: #BDE8B3;
-    height: 10vh;
+    margin: 0.5rem;
+}
+
+.subject-card.purple {
+    background-color: #E3C8F0;
+}
+
+.subject-card.blue {
+    background-color: #B2DFDB;
+}
+
+.subject-name {
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: #333;
+    text-align: left;
+    width: 30%;
+}
+
+.subject-schedule {
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: #333;
+    width: 30%;
+   
+}
+
+.delete-btn {
+    background-color: transparent;
+    padding-top: 0;
+    margin-top: 0;
+    align-items: center;
+    display: flex;
+}
+
+.delete-btn img {
+    border: none;
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
 }
 
 .name-colum-task {
@@ -421,17 +461,6 @@ table input[type="checkbox"]:checked::after {
     cursor: pointer;
     width: 1.5rem;
     height: 1.5rem;
-}
-
-button {
-    border-style: none;
-    border-radius: 1.5rem;
-    height: 2.5rem;
-    font-size: 24px;
-    font-family: 'Inter', sans-serif;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    cursor: pointer;
-    margin-top: 1rem;
 }
 
 .footer_container {
