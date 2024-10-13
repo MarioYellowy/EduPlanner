@@ -29,7 +29,6 @@
                     <img src="../img/filter.png" for="filter_icon">
                 </section>
                 <div class="subject-list">
-                    
                 </div>
             </div>
             <button class="add-subject-btn">
@@ -37,6 +36,42 @@
                 <img src="../img/plus.png" alt="Icono" class="btn-img">
             </button>
         </section>
+        <div id="addSubjectModal" class="modal">  
+            <div class="modal-content"> 
+                <div class="modal-tittle">
+                    <h2>Add New Subject</h2>  
+                    <span class="close" id="closeModal">&times;</span>
+                </div> 
+                <form id="addSubjectForm">  
+                    <label for="subjectName">Subject Name:</label>  
+                    <input type="text" id="subjectName" name="subjectName" required>  
+                    <label for="subjectDate">Start Date:</label>  
+                    <input type="date" id="subjectDate" name="subjectDate" required>  
+                    <label for="subjectDate">End Date:</label>
+                    <input type="date" name="subjectDateEnd" id="subjectDateEnd">
+                    <button type="submit">Add Subject</button>  
+                </form>  
+            </div>  
+        </div> 
+        <div id="editSubjectModal" class="modal-edit-subject">
+            <div class="modal-edit-subject-content">
+                <div class="modal-tittle">
+                    <h2>Edit Subject</h2>  
+                    <span class="close" id="closeModal">&times;</span>
+                </div> 
+                <form id="editSubjectForm">
+                    <label for="editSubjectName">Name:</label>
+                    <input type="text" id="editSubjectName" name="subjectName">
+                    <label for="editSubjectDateStart">Start Date:</label>
+                    <input type="date" id="editSubjectDateStart" name="subjectDateStart">
+                    <label for="editSubjectDateEnd">End Date:</label>
+                    <input type="date" id="editSubjectDateEnd" name="subjectDateEnd">
+                    <label for="editSubjectDateEnd">Add existing task</label>
+                    <input type="text" id="editSubjectAddTask" name="subjectAddTask">
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+        </div>
         <section class="task-section"> <!-- Task Section -->
             <h2>Task</h2>
             <div class="task-container">
@@ -85,31 +120,13 @@
             </div>
         </section>
     </div>
-
-    <div id="addSubjectModal" class="modal">  
-        <div class="modal-content"> 
-            <div class="modal-tittle">
-                <h2>Add New Subject</h2>  
-                <span class="close" id="closeModal">&times;</span>
-            </div> 
-             
-            <form id="addSubjectForm">  
-                <label for="subjectName">Subject Name:</label>  
-                <input type="text" id="subjectName" name="subjectName" required>  
-                <label for="subjectDate">Date:</label>  
-                <input type="date" id="subjectDate" name="subjectDate" required>  
-                <input type="date" name="subjectDateEnd" id="subjectDateEnd">
-                <button type="submit">Add Subject</button>  
-            </form>  
-        </div>  
-    </div> 
+   
     <div id="addTaskModal" class="modal-task">
         <div class="modal-content-task">
             <div class="modal-tittle-task">
                 <h2>Add New Task</h2>
                 <span class="close-task" id="closeModal-task">&times;</span>
             </div>
-
             <form id="addTaskForm">
                 <label for="taskName">Task Name:</label> <!--nombre de tarea-->
                 <input type="text" id="taskName" name="taskName" required>
