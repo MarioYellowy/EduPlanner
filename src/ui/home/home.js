@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const sidebarMenu = document.getElementById("sidebar"); 
     const sidepanel = document.getElementById("sidepanel");
     const btn_logout = document.getElementById("logoutBtn");
+    const btn_addTask = document.getElementById("openTaskModal");
+    const btnCloseTaskModal = document.getElementById("closeModal-task");
+    const modalTask = document.getElementById("addTaskModal");
 
     btn_logout.addEventListener('click', () => {
         ipcRenderer.send('logout');
