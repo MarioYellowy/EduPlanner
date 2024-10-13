@@ -3,6 +3,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const { getConnection } = require("../../database");
     let currentUserId;
 
+    // Definir los colores
+    const colors = ['#BDE8B3', '#E0B1D6', '#89E7ED'];
+    let colorIndex = 0; // Índice para el color actual
+
     const btn_addSubject = document.querySelector(".add-subject-btn");
     const span = document.getElementById("closeModal");
     const modal = document.getElementById('addSubjectModal');
@@ -42,19 +46,32 @@ document.addEventListener("DOMContentLoaded", () => {
     async function addSubject(id_user, subjectName, subjectDateStart, subjectDateEnd) {
         const conn = await getConnection();
         try {
-            await conn.query('CALL addSubject(?,?,?,?,?)', [id_user, subjectName, subjectDateStart, subjectDateEnd, 1]);
-            console.log('Nueva materia agregada:', subjectName, 'Fecha inicio:', subjectDateStart, 'Fecha fin:', subjectDateEnd);
+            const [result] = await conn.query('CALL AddSubject(?,?,?,?,?)', [id_user, subjectName, subjectDateStart, subjectDateEnd, 1]);
+            console.log('Resultado de la inserción:', result); // Imprimir el resultado para verificar
+    
+            const subjectId = result[0][0].subject_id; // Acceder al ID del nuevo subject
+            if (!subjectId) {
+                throw new Error('No se pudo obtener el ID de la materia agregada.');
+            }
             
-            // Si la materia se agregó con éxito, actualiza la interfaz con los valores del formulario
-            const schedule = `${new Date(subjectDateStart).toLocaleDateString()} - ${new Date(subjectDateEnd).toLocaleDateString()}`; // Mostrar el rango de fechas como horario
-            appendNewSubject(subjectName, schedule); // Actualizar el DOM con la nueva materia
-            
+            console.log('Nueva materia agregada:', subjectName, 'ID:', subjectId);
+    
+            // Formatear las fechas
+            const schedule = `${new Date(subjectDateStart).toLocaleDateString()} - ${new Date(subjectDateEnd).toLocaleDateString()}`;
+            appendNewSubject(subjectName, schedule, subjectId); // Asegúrate de pasar el subjectId
+    
+            // Eliminar el mensaje "No subjects yet" si existe
+            const noSubjectsMessage = document.getElementById('noSubjectsMessage');
+            if (noSubjectsMessage) {
+                noSubjectsMessage.remove();
+            }
+    
             return true;
         } catch (error) {
             console.error('Error al agregar la materia:', error);
             return false;
         }
-    }
+    }    
 
     function openAddSubject(modal) {
         return new Promise((resolve) => {
@@ -83,7 +100,13 @@ document.addEventListener("DOMContentLoaded", () => {
     
         // Crear el contenedor de la tarjeta de la materia
         const subjectCard = document.createElement('div');
-        subjectCard.classList.add('subject-card', 'green'); // Se asigna la clase y color
+        subjectCard.classList.add('subject-card'); // Se asigna la clase
+    
+        // Asignar el color de la tarjeta
+        subjectCard.style.backgroundColor = colors[colorIndex];
+        
+        // Actualizar el índice del color para la próxima tarjeta
+        colorIndex = (colorIndex + 1) % colors.length;
     
         // Crear el contenedor de la información de la materia
         const subjectInfo = document.createElement('div');
@@ -120,30 +143,39 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteBtn.addEventListener('click', async function () {
             const confirmDelete = confirm(`¿Estás seguro de que quieres eliminar la materia "${subjectName}"?`);
             if (confirmDelete) {
-                await deleteSubject(subjectId, subjectCard); // Asegúrate de que subjectId está disponible aquí
+                console.log('ID de la materia a eliminar:', subjectId); // Verifica el ID aquí
+                await deleteSubject(subjectId, subjectCard);
             }
         });
     }
+    
     async function getUserSubjects(userId) {
         const conn = await getConnection();
         try {
-            const [subjects] = await conn.query('CALL GetUserSubjects(?)', [userId]);
-            console.log('Subjects obtenidos:', subjects); // Verificar qué datos se están recibiendo
-        
+            const [results] = await conn.query('CALL GetUserSubjects(?)', [userId]);
+            console.log('Subjects obtenidos:', results);
+    
+            const subjects = results[0]; // Acceder al primer array
             const subjectList = document.querySelector('.subject-list');
             subjectList.innerHTML = ''; // Limpiar la lista de subjects previos
-        
-            if (subjects[0].length === 0) {  // Asegúrate de usar `subjects[0]`
+    
+            // Verificar si no hay subjects y mostrar el mensaje
+            if (subjects.length === 0) {
                 const noSubjectsMessage = document.createElement('p');
+                noSubjectsMessage.id = 'noSubjectsMessage'; // Asigna un ID para referenciarlo después
                 noSubjectsMessage.textContent = 'No subjects yet';
                 subjectList.appendChild(noSubjectsMessage);
             } else {
-                subjects[0].forEach(subject => { // Usar `subjects[0]`
+                // Eliminar el mensaje si ya existe
+                const noSubjectsMessage = document.getElementById('noSubjectsMessage');
+                if (noSubjectsMessage) {
+                    noSubjectsMessage.remove();
+                }
+                subjects.forEach(subject => {
                     const schedule = `${new Date(subject.start_date).toLocaleDateString()} - ${new Date(subject.end_date).toLocaleDateString()}`;
-                    appendNewSubject(subject.name_subject, schedule, subject.subject_id);  // Usar `name_subject`, `start_date`, `end_date`
+                    appendNewSubject(subject.name_subject, schedule, subject.subject_id);
                 });
             }
-    
         } catch (error) {
             console.error('Error al obtener los subjects:', error);
         }
@@ -154,11 +186,11 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             await conn.query('CALL DeleteSubject(?)', [subjectId]);
             console.log('Materia eliminada con ID:', subjectId);
-    
+            
             // Eliminar la tarjeta de la interfaz
             subjectCard.remove();
         } catch (error) {
-            console.error('Error al eliminar la materia:', error);
+            console.error('Error al eliminar la materia:', error.message); // Muestra el mensaje de error
             alert('Error al eliminar la materia. Inténtalo de nuevo.');
         }
     }

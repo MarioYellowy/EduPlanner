@@ -306,6 +306,7 @@ h2 {
     border-radius: 10px;
     height: 10vh;
     cursor: pointer;
+    margin: 0.5rem;
 }
 
 .subject-info {
@@ -324,18 +325,6 @@ h2 {
     content: url('../img/trash-white.png'); 
 }
 
-.subject-card.green {
-    background-color: #BDE8B3;
-    margin: 0.5rem;
-}
-
-.subject-card.purple {
-    background-color: #E3C8F0;
-}
-
-.subject-card.blue {
-    background-color: #B2DFDB;
-}
 
 .subject-name {
     font-weight: bold;
