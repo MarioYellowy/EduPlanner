@@ -78,6 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function convertDateFormat(dateStr) {
+        const [day, month, year] = dateStr.split('/');
+        return `${year}-${month}-${day}`;
+    }
+
     function openAddSubject(modal) {
         return new Promise((resolve) => {
             modal.classList.add("show");
@@ -105,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const subjectCard = document.createElement('div');
         subjectCard.classList.add('subject-card');
+        subjectCard.dataset.id = subjectId;
         subjectCard.style.backgroundColor = colors[colorIndex];
         colorIndex = (colorIndex + 1) % colors.length;
 
@@ -137,19 +143,21 @@ document.addEventListener("DOMContentLoaded", () => {
         subjectList.appendChild(subjectCard);
 
         subjectInfo.addEventListener('click', function () {
+            console.log('Abriendo modal de edición con:', subjectName, schedule, subjectId);
             openEditModal(subjectName, schedule, subjectId);
         });
 
         deleteBtn.addEventListener('click', async function (event) {
             event.stopPropagation();
-            const confirmDelete = confirm(`¿Estás seguro de que quieres eliminar la materia "${subjectName}"?`);
+            const updatedSubjectName = subjectNameElem.textContent;
+            const confirmDelete = confirm(`¿Estás seguro de que quieres eliminar la materia "${updatedSubjectName}"?`);
             if (confirmDelete) {
                 await deleteSubject(subjectId, subjectCard);
             }
         });
     }
 
-    function openEditModal(subjectName, schedule, subjectId) {
+    async function openEditModal(subjectName, schedule, subjectId) {
         const modal = document.getElementById('editSubjectModal');
         const editSubjectName = document.getElementById('editSubjectName');
         const editSubjectDateStart = document.getElementById('editSubjectDateStart');
@@ -157,10 +165,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         modal.style.display = 'block';
 
-        editSubjectName.value = subjectName;
-        const [startDate, endDate] = schedule.split(' - ');
+        const subjectData = await getSubjectById(subjectId);
 
-        console.log('startDate:', startDate, 'endDate:', endDate);
+
+        editSubjectName.value = subjectData.name_subject;
+        const [startDate, endDate] = [subjectData.start_date, subjectData.end_date].map(date => new Date(date).toLocaleDateString());
+
+        editSubjectDateStart.value = startDate;
+        editSubjectDateEnd.value = endDate;
 
         const validStartDate = new Date(convertDateFormat(startDate));
         const validEndDate = new Date(convertDateFormat(endDate));
@@ -188,40 +200,50 @@ document.addEventListener("DOMContentLoaded", () => {
         form.onsubmit = async function (event) {
             event.preventDefault();
 
-            const subjectName = editSubjectName.value;
-            const subjectDateStart = editSubjectDateStart.value;
-            const subjectDateEnd = editSubjectDateEnd.value;
+            const updatedSubjectName = editSubjectName.value;
+            const updatedSubjectDateStart = editSubjectDateStart.value;
+            const updatedSubjectDateEnd = editSubjectDateEnd.value;
 
-            const success = await updateSubject(subjectId, subjectName, subjectDateStart, subjectDateEnd);
+            const success = await updateSubject(subjectId, updatedSubjectName, updatedSubjectDateStart, updatedSubjectDateEnd);
 
             if (success) {
-                updateSubjectInDOM(subjectId, subjectName, subjectDateStart, subjectDateEnd);
+                updateSubjectInDOM(subjectId, updatedSubjectName, updatedSubjectDateStart, updatedSubjectDateEnd);
                 modal.style.display = 'none';
             }
         };
     }
 
+    async function getSubjectById(subjectId) {
+        const conn = await getConnection();
+        try {
+            const [results] = await conn.query('CALL GetSubjectById(?)', [subjectId]);
+            return results[0][0];
+        } catch (error) {
+            console.error('Error al obtener la materia:', error);
+            throw error;
+        } finally {
+            if (conn) {
+                conn.end();
+            }
+        }
+    }
+
     function updateSubjectInDOM(subjectId, subjectName, subjectDateStart, subjectDateEnd) {
         const subjectList = document.querySelector('.subject-list');
         const subjectCard = Array.from(subjectList.children).find(card => {
-            const subjectInfo = card.querySelector('.subject-info');
-            const idElem = subjectInfo.dataset.id; // Asumiendo que almacenas el ID en un atributo data
-            return idElem == subjectId; 
+            return card.dataset.id == subjectId;
         });
-        
+
         if (subjectCard) {
             const schedule = `${new Date(subjectDateStart).toLocaleDateString()} - ${new Date(subjectDateEnd).toLocaleDateString()}`;
             const scheduleElem = subjectCard.querySelector('.subject-schedule');
             const nameElem = subjectCard.querySelector('.subject-name');
-    
+
             nameElem.textContent = subjectName;
             scheduleElem.innerHTML = schedule;
+        } else {
+            console.error('No se encontró la tarjeta de la materia con ID:', subjectId);
         }
-    }
-
-    function convertDateFormat(dateStr) {
-        const [day, month, year] = dateStr.split('/');
-        return `${year}-${month}-${day}`;
     }
 
     async function updateSubject(subjectId, subjectName, subjectDateStart, subjectDateEnd) {
@@ -234,11 +256,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             console.log('Resultado de la actualización:', result);
             alert('Materia actualizada con éxito');
-            return true; 
+            return true;
         } catch (error) {
             console.error('Error al actualizar la materia:', error);
             alert('Error al actualizar la materia. Por favor, inténtalo de nuevo.');
-            return false; 
+            return false;
         } finally {
             if (conn) {
                 conn.end();
@@ -281,10 +303,9 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             await conn.query('CALL DeleteSubject(?)', [subjectId]);
             console.log('Materia eliminada con ID:', subjectId);
-
             subjectCard.remove();
         } catch (error) {
-            console.error('Error al eliminar la materia:', error.message); 
+            console.error('Error al eliminar la materia:', error.message);
             alert('Error al eliminar la materia. Inténtalo de nuevo.');
         }
     }
