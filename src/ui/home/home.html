@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,14 @@
     <link rel="stylesheet" href="home.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
-        <div id="sidebar" class="sidebar_menu" >
+        <div id="sidebar" class="sidebar_menu">
             &#9776;
         </div>
         <div id="sidepanel" class="sidepanel">
@@ -28,7 +32,7 @@
                     <img src="../img/filter.png" for="filter_icon">
                 </section>
                 <div class="subject-list">
-                   
+
                 </div>
             </div>
             <button class="add-subject-btn">
@@ -53,34 +57,14 @@
                             <th>Status</th>
                             <th class="edit"></th>
                         </tr>
-                        <tr>
-                            <td>Lab 8</td>
-                            <td>Maths</td>
-                            <td>High</td>
-                            <td>16/10/2024</td>
-                            <td><input type="checkbox"></td>
-                            <td>
-                                <button class="edit-btn">
-                                    <img src="../img/edit.png" >
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lab 8</td>
-                            <td>Maths</td>
-                            <td>High</td>
-                            <td>16/10/2024</td>
-                            <td><input type="checkbox"></td>
-                            <td>
-                                <button class="edit-btn">
-                                    <img src="../img/edit.png" >
-                                </button>
-                            </td>
-                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
                     </table>
                 </div>
             </div>
-            <button class="add-subject-btn">
+            <button id="openTaskModal">
                 <span class="btn-text">Add Task</span>
                 <img src="../img/plus.png" alt="Icono" class="btn-img">
             </button>
@@ -95,7 +79,7 @@
             <div class="completed-container">
                 <div class="completed-title">
                     <h3>Completed</h3>
-                <img src="../img/arrow_down.png" class="arrow down">
+                    <img src="../img/arrow_down.png" class="arrow down">
                 </div>
                 <div class="task-completed">
                     <label class="task-completed-example">Lab 8</label>
@@ -105,27 +89,59 @@
         </section>
     </div>
 
-    <div id="addSubjectModal" class="modal">  
-        <div class="modal-content"> 
+    <div id="addSubjectModal" class="modal">
+        <div class="modal-content">
             <div class="modal-tittle">
-                <h2>Add New Subject</h2>  
+                <h2>Add New Subject</h2>
                 <span class="close" id="closeModal">&times;</span>
-            </div> 
-             
-            <form id="addSubjectForm">  
-                <label for="subjectName">Subject Name:</label>  
-                <input type="text" id="subjectName" name="subjectName" required>  
-                <label for="subjectDate">Date:</label>  
-                <input type="date" id="subjectDate" name="subjectDate" required>  
+            </div>
+
+            <form id="addSubjectForm">
+                <label for="subjectName">Subject Name:</label>
+                <input type="text" id="subjectName" name="subjectName" required>
+                <label for="subjectDate">Date:</label>
+                <input type="date" id="subjectDate" name="subjectDate" required>
                 <input type="date" name="subjectDateEnd" id="subjectDateEnd">
-                <button type="submit">Add Subject</button>  
-            </form>  
-        </div>  
-    </div> 
+                <button type="submit">Add Subject</button>
+            </form>
+        </div>
+    </div>
+    <div id="addTaskModal" class="modal-task">
+        <div class="modal-content-task">
+            <div class="modal-tittle-task">
+                <h2>Add New Task</h2>
+                <span class="close-task" id="closeModal-task">&times;</span>
+            </div>
+
+            <form id="addTaskForm">
+                <label for="taskName">Task Name:</label> <!--nombre de tarea-->
+                <input type="text" id="taskName" name="taskName" required>
+                <label for="taskNotes">Notes:</label> <!--Notas-->
+                <input type="text" id="taskNotes" name="tasktNotes" required>
+                <label for="taskDate">Date:</label> <!--Date-->
+                <input type="date" id="taskDate" name="taskDate" required>
+                <input type="date" name="taskDateEnd" id="taskDateEnd">
+                <label for="taskCategory">Task Category</label> <!--Categoria-->
+                <input type="text" id="taskCategory" name="taskCategory" required>
+                <select name="taskStatus" id="taskStatus"> <!-- Estado tarea-->
+                    <option value="Pending">Pending</option>
+                    <option value="In process">In process</option>
+                    <option value="Concluded">Concluded</option>
+                </select>
+                <select name="taskPriority" id="taskPriority"> <!--Prioridad-->
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+                <button type="submit" id="sendTask">Add Task</button> <!--BOTON ENVIAR TAREA-->
+            </form>
+        </div>
+    </div>
 
     <footer class="footer_container">
         <p>&copy; 2024 EduPlanner_Team</p>
     </footer>
     <script src="../home/home.js"></script>
 </body>
+
 </html>
