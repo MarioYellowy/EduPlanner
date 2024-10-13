@@ -33,6 +33,18 @@ document.addEventListener("DOMContentLoaded", () => {
         span.onclick = function () {
             modal.classList.remove("show");
         }
+        btn_addTask.addEventListener('click', async () => {
+            if (modalTask) {
+                await openTask(modalTask)
+            } else {
+                console.log('No se encontro el modal')
+            }
+        })
+
+        btnCloseTaskModal.addEventListener('click', () => {
+            modalTask.classList.remove('show');
+        });
+
     });
 
     sidebarMenu.addEventListener('click', () => {
