@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn_addTask = document.getElementById("openTaskModal");
     const btnCloseTaskModal = document.getElementById("closeModal-task");
     const modalTask = document.getElementById("addTaskModal");
+    const closeButton = document.getElementById('closeModalTask');
 
     btn_logout.addEventListener('click', () => {
         ipcRenderer.send('logout');
@@ -22,8 +23,27 @@ document.addEventListener("DOMContentLoaded", () => {
     ipcRenderer.on('set-user-id', (event, userId) => {
         currentUserId = userId;
         console.log('ID de usuario recibido en home:', currentUserId);
-        loadInitialTasks(currentUserId)
         getUserSubjects(currentUserId);
+
+        loadInitialTasks(currentUserId)
+
+
+
+
+        closeButton.onclick = function () {
+            const modal = document.getElementById('editTaskModal');
+            modal.style.display = 'none';
+        };
+
+
+        window.onclick = function (event) {
+            const modal = document.getElementById('editTaskModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+
+
         btn_addSubject.addEventListener('click', async () => {
             if (modal) {
                 await openAddSubject(modal);
@@ -314,15 +334,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const conn = await getConnection();
         try {
 
-            const [result] = await conn.query('CALL InsertTask(?,?,?,?,?,?,?,?, @p_task_id)',
+            await conn.query('CALL InsertTask(?,?,?,?,?,?,?,?, @p_task_id)',
                 [name_task, note_task, start_date, end_date, category, status, priority, id_user]);
 
             const [taskIdResult] = await conn.query('SELECT @p_task_id AS task_id');
             const newTaskId = taskIdResult[0].task_id;
 
             const newTask = { id: newTaskId, name_task, category, priority, start_date, status };
-
+            console.log(newTask.id)
+            console.log('Nueva tarea:', JSON.stringify(newTask, null, 2)); 
             addLastTaskToInterface(newTask);
+
             return true;
         } catch (error) {
             console.error('Error al agregar la tarea:', error);
@@ -351,24 +373,44 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function addLastTaskToInterface(task) {
+
         const taskList = document.querySelector('.task-list tbody');
+        if (!taskList) {
+            console.error('No se pudo encontrar el tbody para agregar la tarea.');
+            return;
+        }
 
         const newRow = taskList.insertRow(-1);
+        newRow.id = `task-${task.id}`;
 
-        const cellName = newRow.insertCell(0);
-        const cellCategory = newRow.insertCell(1);
-        const cellPriority = newRow.insertCell(2);
-        const cellDate = newRow.insertCell(3);
-        const cellStatus = newRow.insertCell(4);
-        const cellEdit = newRow.insertCell(5);
-        const cellDelete = newRow.insertCell(6);
 
+        const cellId = newRow.insertCell(0);
+        const cellName = newRow.insertCell(1);
+        const cellCategory = newRow.insertCell(2);
+        const cellPriority = newRow.insertCell(3);
+        const cellDate = newRow.insertCell(4);
+        const cellStatus = newRow.insertCell(5);
+        const cellEdit = newRow.insertCell(6);
+
+        cellName.className = 'task-name';
+        cellCategory.className = 'task-category';
+        cellPriority.className = 'task-priority';
+        cellDate.className = 'task-date';
+        cellStatus.className = 'task-status';
+
+
+        cellId.textContent = task.id;
         cellName.textContent = task.name_task;
         cellCategory.textContent = task.category;
         cellPriority.textContent = task.priority;
         cellDate.textContent = task.start_date;
-        cellStatus.innerHTML = '<input type="checkbox"' + (task.status === 'Concluded' ? ' checked' : '') + '>';
+        cellStatus.innerHTML = `<input type="checkbox" ${task.status === 'Concluded' ? 'checked' : ''} />`;
+
+
         cellEdit.innerHTML = '<button class="edit-btn"><img src="../img/edit.png" alt="Edit"></button>';
+        const editButton = newRow.querySelector('.edit-btn');
+        editButton.onclick = () => openEditModal(task.task_id, currentUserId);
+
 
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Eliminar';
@@ -376,16 +418,19 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteButton.onclick = async () => {
             const confirmed = confirm('¿Estás seguro de que deseas eliminar esta tarea?');
             if (confirmed) {
-                const success = await deleteTask(task.id);
+                const success = await deleteTask(task.task_id, currentUserId);
                 if (success) {
-
-                    taskList.deleteRow(newRow.rowIndex);
+                    const rowToDelete = document.getElementById(`task-${task.id}`);
+                    if (rowToDelete) {
+                        rowToDelete.remove();
+                    }
                 } else {
                     alert('No se pudo eliminar la tarea. Inténtalo de nuevo más tarde.');
                 }
             }
         };
-        cellDelete.appendChild(deleteButton);
+        cellEdit.appendChild(deleteButton);
+
     }
 
     function openTask(modal) {
@@ -440,4 +485,72 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error('Error al cargar las tareas iniciales:', error);
         }
     }
+
+    //edicion tareas
+
+    function openEditModal(taskId, currentUserId) {
+        const modal = document.getElementById('editTaskModal');
+        console.log(taskId)
+        console.log(currentUserId)
+        modal.classList.add('show');
+
+        const taskRow = document.getElementById(`task-${taskId}`);
+        if (taskRow) {
+            document.getElementById('editTaskName').value = taskRow.querySelector('.task-name').textContent;
+            document.getElementById('editTaskNotes').value = taskRow.querySelector('.task-notes').textContent;
+            document.getElementById('editTaskDate').value = taskRow.querySelector('.task-start-date').textContent;
+            document.getElementById('editTaskDateEnd').value = taskRow.querySelector('.task-end-date').textContent;
+            document.getElementById('editTaskCategory').value = taskRow.querySelector('.task-category').textContent;
+            document.getElementById('editTaskStatus').value = taskRow.querySelector('.task-status input').checked ? 'Concluded' : 'Pending'; 
+            document.getElementById('editTaskPriority').value = taskRow.querySelector('.task-priority').textContent;
+        }
+
+        document.getElementById('editTaskForm').onsubmit = async function (event) {
+            event.preventDefault();
+            await updateTask(taskId, currentUserId);
+            modal.classList.remove('show');
+        };
+
+        document.getElementById("closeModal").onclick = () => modal.classList.remove('show');
+    }
+
+    async function updateTask(taskId, currentUserId) {
+        const taskName = document.getElementById('editTaskName').value;
+        const taskNotes = document.getElementById('editTaskNotes').value;
+        const taskDateStart = document.getElementById('editTaskDate').value;
+        const taskDateEnd = document.getElementById('editTaskDateEnd').value;
+        const taskCategory = document.getElementById('editTaskCategory').value;
+        const taskStatus = document.getElementById('editTaskStatus').value;
+        const taskPriority = document.getElementById('editTaskPriority').value;
+
+        const conn = await getConnection();
+        try {
+            await conn.query('CALL UpdateTask(?,?,?,?,?,?,?,?,?)',
+                [currentUserId, taskId, taskName, taskStatus, taskNotes, taskCategory, taskPriority, taskDateStart, taskDateEnd]);
+
+            updateTaskInInterface(taskId, taskName, taskStatus, taskNotes, taskCategory, taskPriority, taskDateStart, taskDateEnd);
+            console.log('Tarea actualizada con éxito');
+        } catch (error) {
+            console.error('Error al actualizar la tarea:', error);
+        } finally {
+            if (conn) {
+                conn.end();
+            }
+        }
+    }
+
+    function updateTaskInInterface(taskId, taskName, taskStatus, taskNotes, taskCategory, taskPriority, taskDateStart, taskDateEnd) {
+        const taskRow = document.getElementById(`task-${taskId}`); 
+
+        if (taskRow) {
+            taskRow.querySelector('.task-name').textContent = taskName;
+            taskRow.querySelector('.task-category').textContent = taskCategory;
+            taskRow.querySelector('.task-priority').textContent = taskPriority;
+            taskRow.querySelector('.task-start-date').textContent = taskDateStart;
+            taskRow.querySelector('.task-status input').checked = (taskStatus === 'Concluded');
+            taskRow.querySelector('.task-end-date').textContent = taskDateEnd;
+            taskRow.querySelector('.task-notes').textContent = taskNotes;
+        }
+    }
+
 });

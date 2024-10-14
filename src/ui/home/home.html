@@ -81,7 +81,9 @@
                 </section>
                 <div class="task-list">
                     <table>
+                        <thead>
                         <tr>
+                            <th>ID</th> 
                             <th>Name</th>
                             <th>Category</th>
                             <th>Priority</th>
@@ -90,7 +92,7 @@
                             <th class="edit"></th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="tbody">
 
                         </tbody>
                     </table>
@@ -150,6 +152,37 @@
                 <button type="submit" id="sendTask">Add Task</button> <!--BOTON ENVIAR TAREA-->
             </form>
         </div>
+    </div>
+    <div id="editTaskModal" class="modal-edit-subject">
+        <div class="modal-edit-subject-content">
+            <div class="modal-tittle">
+                <h2>Edit Task</h2>  
+                <span class="close" id="closeModalTask">&times;</span>
+            </div> 
+            <form id="editTaskForm">
+                <label for="editTaskName">Task Name:</label> <!--nombre de tarea-->
+                <input type="text" id="editTaskName" name="taskName" required>
+                <label for="editTaskNotes">Notes:</label> <!--Notas-->
+                <input type="text" id="editTaskNotes" name="tasktNotes" required>
+                <label for="editTaskDate">Date:</label> <!--Date-->
+                <input type="date" id="editTaskDate" name="taskDate" required>
+                <input type="date" name="editTaskDateEnd" id="editTaskDateEnd">
+                <label for="editTaskCategory">Task Category</label> <!--Categoria-->
+                <input type="text" id="editTaskCategory" name="taskCategory" required>
+                <select name="editTaskStatus" id="editTaskStatus"> <!-- Estado tarea-->
+                    <option value="Pending">Pending</option>
+                    <option value="In process">In process</option>
+                    <option value="Concluded">Concluded</option>
+                </select> 
+                <select name="editTaskPriority" id="editTaskPriority"> <!--Prioriadad-->
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+                <button type="submit" id="sendTask">Save changes</button> <!--BOTON ENVIAR TAREA-->
+            </form>
+        </div>
+       
     </div>
 
     <footer class="footer_container">
