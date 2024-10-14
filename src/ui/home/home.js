@@ -392,6 +392,9 @@ document.addEventListener("DOMContentLoaded", () => {
         cellStatus.innerHTML = `<input type="checkbox" ${task.status === 'Concluded' ? 'checked' : ''} />`;
     
         cellEdit.innerHTML = '<button class="edit-btn"><img src="../img/edit.png" alt="Edit"></button>';
+        const editButton = newRow.querySelector('.edit-btn');
+        editButton.onclick = () => openEditTaskModal(task.task_id, currentUserId);
+
         cellDelete.innerHTML = '<button class="delete-btn-task"><img src="../img/trash-task.png" alt="delete"></button>';
     
         const deleteButton = newRow.querySelector('.delete-btn-task');
@@ -478,6 +481,7 @@ document.addEventListener("DOMContentLoaded", () => {
         modal.classList.add('show');
 
         const taskRow = document.getElementById(`task-${taskId}`);
+        console.log(taskRow);
         if (taskRow) {
             document.getElementById('editTaskName').value = taskRow.querySelector('.task-name').textContent;
             document.getElementById('editTaskNotes').value = taskRow.querySelector('.task-notes').textContent;
