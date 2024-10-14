@@ -501,7 +501,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('editTaskDate').value = taskRow.querySelector('.task-start-date').textContent;
             document.getElementById('editTaskDateEnd').value = taskRow.querySelector('.task-end-date').textContent;
             document.getElementById('editTaskCategory').value = taskRow.querySelector('.task-category').textContent;
-            document.getElementById('editTaskStatus').value = taskRow.querySelector('.task-status input').checked ? 'Concluded' : 'Pending'; // Asume que el estado es un valor de texto  
+            document.getElementById('editTaskStatus').value = taskRow.querySelector('.task-status input').checked ? 'Concluded' : 'Pending'; 
             document.getElementById('editTaskPriority').value = taskRow.querySelector('.task-priority').textContent;
         }
 
