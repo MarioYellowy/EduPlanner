@@ -746,3 +746,38 @@ table button img {
     background-color: #3B7B80; 
     transform: scale(0.98); 
 }
+
+.task-status-options {
+    background-color: #eeffff; 
+    border: 1px solid #00897b;   
+    border-radius: 5px;     
+    padding: 10px;            
+    font-size: 16px;           
+    color: #333;           
+    width: 200px;            
+    cursor: pointer;        
+}
+
+.task-priority-options {
+    background-color: #eeffff; 
+    border: 1px solid #00897b; 
+    border-radius: 5px;       
+    padding: 10px;             
+    font-size: 16px;           
+    color: #004d40;            
+    width: 200px;              
+    cursor: pointer;           
+}
+
+/* Cambios de estilo al pasar el mouse sobre el select */
+.task-status-options:hover,
+.task-priority-options:hover {
+    border-color: #888;      
+}
+
+/* Estilo para las opciones dentro del select */
+.task-status-options option,
+.task-priority-options option {
+    padding: 10px;            /* Espaciado interno para las opciones */
+    background-color: #fff;   /* Color de fondo de las opciones */
+}
