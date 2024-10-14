@@ -98,11 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function convertDateFormat(dateStr) {
-        const [day, month, year] = dateStr.split('/');
-        return `${year}-${month}-${day}`;
-    }
-
     function openAddSubject(modal) {
         return new Promise((resolve) => {
             modal.classList.add("show");
@@ -110,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 event.preventDefault();
 
                 let subjectName = document.getElementById('subjectName').value;
-                let subjectDateStart = document.getElementById('subjectDate').value;
+                let subjectDateStart = document.getElementById('subjectDateStart').value;
                 let subjectDateEnd = document.getElementById('subjectDateEnd').value;
 
                 let success = await addSubject(currentUserId, subjectName, subjectDateStart, subjectDateEnd);
@@ -130,12 +125,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const subjectCard = document.createElement('div');
         subjectCard.classList.add('subject-card');
-        subjectCard.dataset.id = subjectId;
         subjectCard.style.backgroundColor = colors[colorIndex];
         colorIndex = (colorIndex + 1) % colors.length;
 
         const subjectInfo = document.createElement('div');
         subjectInfo.classList.add('subject-info');
+        subjectInfo.setAttribute('data-id', subjectId);
 
         const subjectNameElem = document.createElement('p');
         subjectNameElem.classList.add('subject-name');
@@ -144,6 +139,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const scheduleElem = document.createElement('p');
         scheduleElem.classList.add('subject-schedule');
         scheduleElem.innerHTML = schedule;
+
+        const editBtn = document.createElement('button')
+        editBtn.innerHTML = '<button class="edit-btn-subject"><img src="../img/edit.png"></button>';
+        editBtn.classList.add('edit-btn-subject')
+
 
         const deleteBtn = document.createElement('button');
         deleteBtn.classList.add('delete-btn');
@@ -156,63 +156,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
         subjectInfo.appendChild(subjectNameElem);
         subjectInfo.appendChild(scheduleElem);
+        subjectInfo.appendChild(editBtn);
         subjectInfo.appendChild(deleteBtn);
+
 
         subjectCard.appendChild(subjectInfo);
 
         subjectList.appendChild(subjectCard);
 
-        subjectInfo.addEventListener('click', function () {
-            console.log('Abriendo modal de edición con:', subjectName, schedule, subjectId);
-            openEditModal(subjectName, schedule, subjectId);
+        editBtn.addEventListener('click', function () {
+            const currentSubjectData = {
+                name: subjectName,
+                schedule: schedule,
+                id: subjectId,
+            };
+            console.log('Abriendo modal de edición con:', currentSubjectData); 
+            openEditModal(currentSubjectData.name, currentSubjectData.schedule, currentSubjectData.id);
         });
 
         deleteBtn.addEventListener('click', async function (event) {
             event.stopPropagation();
-            const updatedSubjectName = subjectNameElem.textContent;
-            const confirmDelete = confirm(`¿Estás seguro de que quieres eliminar la materia "${updatedSubjectName}"?`);
+            const confirmDelete = confirm(`¿Estás seguro de que quieres eliminar la materia "${subjectName}"?`);
             if (confirmDelete) {
                 await deleteSubject(subjectId, subjectCard);
             }
         });
     }
 
-    async function openEditModal(subjectName, schedule, subjectId) {
+    function openEditModal(subjectName, schedule, subjectId) {
+      
         const modal = document.getElementById('editSubjectModal');
         const editSubjectName = document.getElementById('editSubjectName');
         const editSubjectDateStart = document.getElementById('editSubjectDateStart');
         const editSubjectDateEnd = document.getElementById('editSubjectDateEnd');
 
-        modal.style.display = 'block';
+        editSubjectName.value = '';
+        editSubjectDateStart.value = '';
+        editSubjectDateEnd.value = '';
 
-        const subjectData = await getSubjectById(subjectId);
+        const [startDate, endDate] = schedule.split(' - ');
 
+        editSubjectName.value = subjectName;
+        editSubjectDateStart.value = convertDateFormat(startDate);
+        editSubjectDateEnd.value = convertDateFormat(endDate);
 
-        editSubjectName.value = subjectData.name_subject;
-        const [startDate, endDate] = [subjectData.start_date, subjectData.end_date].map(date => new Date(date).toLocaleDateString());
+        modal.classList.add('show'); 
 
-        editSubjectDateStart.value = startDate;
-        editSubjectDateEnd.value = endDate;
-
-        const validStartDate = new Date(convertDateFormat(startDate));
-        const validEndDate = new Date(convertDateFormat(endDate));
-
-        if (!isNaN(validStartDate) && !isNaN(validEndDate)) {
-            editSubjectDateStart.value = validStartDate.toISOString().split('T')[0];
-            editSubjectDateEnd.value = validEndDate.toISOString().split('T')[0];
-        } else {
-            console.error('Fecha no válida:', startDate, endDate);
-            alert('Una de las fechas no es válida. Por favor verifica.');
-        }
-
+        
         const closeBtn = modal.querySelector('.close');
         closeBtn.onclick = function () {
-            modal.style.display = 'none';
+            modal.classList.remove('show');
+            editSubjectName.value = '';
+            editSubjectDateStart.value = '';
+            editSubjectDateEnd.value = '';
         };
 
         window.onclick = function (event) {
             if (event.target === modal) {
-                modal.style.display = 'none';
+                modal.classList.remove('show');
             }
         };
 
@@ -220,50 +221,44 @@ document.addEventListener("DOMContentLoaded", () => {
         form.onsubmit = async function (event) {
             event.preventDefault();
 
-            const updatedSubjectName = editSubjectName.value;
-            const updatedSubjectDateStart = editSubjectDateStart.value;
-            const updatedSubjectDateEnd = editSubjectDateEnd.value;
+            const subjectName = editSubjectName.value;
+            const subjectDateStart = editSubjectDateStart.value;
+            const subjectDateEnd = editSubjectDateEnd.value;
 
-            const success = await updateSubject(subjectId, updatedSubjectName, updatedSubjectDateStart, updatedSubjectDateEnd);
-
+            const success = await updateSubject(subjectId, subjectName, subjectDateStart, subjectDateEnd);
             if (success) {
-                updateSubjectInDOM(subjectId, updatedSubjectName, updatedSubjectDateStart, updatedSubjectDateEnd);
-                modal.style.display = 'none';
+                updateSubjectInDOM(subjectId, subjectName, subjectDateStart, subjectDateEnd);
+                getUserSubjects(currentUserId);  
+                modal.classList.remove('show');  
             }
         };
     }
 
-    async function getSubjectById(subjectId) {
-        const conn = await getConnection();
-        try {
-            const [results] = await conn.query('CALL GetSubjectById(?)', [subjectId]);
-            return results[0][0];
-        } catch (error) {
-            console.error('Error al obtener la materia:', error);
-            throw error;
-        } finally {
-            if (conn) {
-                conn.end();
-            }
-        }
-    }
-
     function updateSubjectInDOM(subjectId, subjectName, subjectDateStart, subjectDateEnd) {
         const subjectList = document.querySelector('.subject-list');
+
         const subjectCard = Array.from(subjectList.children).find(card => {
-            return card.dataset.id == subjectId;
+            return card.querySelector('.subject-info').dataset.id == subjectId;
         });
 
         if (subjectCard) {
             const schedule = `${new Date(subjectDateStart).toLocaleDateString()} - ${new Date(subjectDateEnd).toLocaleDateString()}`;
+
             const scheduleElem = subjectCard.querySelector('.subject-schedule');
             const nameElem = subjectCard.querySelector('.subject-name');
 
             nameElem.textContent = subjectName;
             scheduleElem.innerHTML = schedule;
+
+            console.log(`Materia actualizada: ${subjectId}, Nombre: ${subjectName}, Horario: ${schedule}`);
         } else {
-            console.error('No se encontró la tarjeta de la materia con ID:', subjectId);
+            console.error("No se encontró la materia en la lista del DOM. ID:", subjectId);
         }
+    }
+
+    function convertDateFormat(dateStr) {
+        const [day, month, year] = dateStr.split('/');
+        return `${year}-${month}-${day}`;
     }
 
     async function updateSubject(subjectId, subjectName, subjectDateStart, subjectDateEnd) {
@@ -323,21 +318,34 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             await conn.query('CALL DeleteSubject(?)', [subjectId]);
             console.log('Materia eliminada con ID:', subjectId);
+
             subjectCard.remove();
+
+            const subjectList = document.querySelector('.subject-list');
+            if (subjectList.children.length === 0) {
+                const noSubjectsMessage = document.createElement('p');
+                noSubjectsMessage.id = 'noSubjectsMessage';
+                noSubjectsMessage.textContent = 'No subjects yet';
+                subjectList.appendChild(noSubjectsMessage);
+            }
         } catch (error) {
             console.error('Error al eliminar la materia:', error.message);
             alert('Error al eliminar la materia. Inténtalo de nuevo.');
+        } finally {
+            if (conn) {
+                conn.end();
+            }
         }
     }
 
     async function addTask(name_task, note_task, start_date, end_date, category, status, priority, id_user) {
         const conn = await getConnection();
         try {
-
-            await conn.query('CALL InsertTask(?,?,?,?,?,?,?,?, @p_task_id)',
+            await conn.query('CALL InsertTask(?,?,?,?,?,?,?,?, @p_task_id)', 
                 [name_task, note_task, start_date, end_date, category, status, priority, id_user]);
-
+    
             const [taskIdResult] = await conn.query('SELECT @p_task_id AS task_id');
+<<<<<<< HEAD
             const newTaskId = taskIdResult[0].task_id;
 
             const newTask = { id: newTaskId, name_task, category, priority, start_date, status };
@@ -345,25 +353,17 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log('Nueva tarea:', JSON.stringify(newTask, null, 2));
             addLastTaskToInterface(newTask);
 
+=======
+            const newTaskId = taskIdResult[0].task_id; 
+    
+            const newTask = { id: newTaskId, name_task, category, priority, start_date, status }; 
+            console.log('Nueva tarea:', JSON.stringify(newTask, null, 2)); 
+            addLastTaskToInterface(newTask); 
+    
+>>>>>>> main
             return true;
         } catch (error) {
             console.error('Error al agregar la tarea:', error);
-            return false;
-        } finally {
-            if (conn) {
-                conn.end();
-            }
-        }
-    }//
-
-    async function deleteTask(taskId) {
-        const conn = await getConnection();
-        try {
-            await conn.query('CALL DeleteTaskById(?)', [taskId]);
-            console.log('Tarea con ID ' + taskId + ' eliminada con éxito');
-            return true;
-        } catch (error) {
-            console.error('Error al eliminar la tarea:', error);
             return false;
         } finally {
             if (conn) {
@@ -378,11 +378,21 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error('No se pudo encontrar el tbody para agregar la tarea.');
             return;
         }
+<<<<<<< HEAD
 
         // Asegúrate de que estés utilizando la propiedad correcta para el ID  
         const newRow = taskList.insertRow(-1);
         newRow.id = `task-${task.task_id}`; // Asegúrate de que aquí esté task.task_id si eso es lo que necesitas  
 
+=======
+    
+        // Asegúrate de que task_id esté definido correctamente
+        const taskId = task.task_id || task.id; // Usa task_id o id dependiendo de lo que esté disponible
+        
+        const newRow = taskList.insertRow(-1);
+        newRow.id = `task-${taskId}`; // Usa taskId aquí para asegurar consistencia
+    
+>>>>>>> main
         const cellId = newRow.insertCell(0);
         const cellName = newRow.insertCell(1);
         const cellCategory = newRow.insertCell(2);
@@ -390,6 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const cellDate = newRow.insertCell(4);
         const cellStatus = newRow.insertCell(5);
         const cellEdit = newRow.insertCell(6);
+<<<<<<< HEAD
 
         cellName.className = 'task-name';
         cellCategory.className = 'task-category';
@@ -399,11 +410,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Corrige el ID que se muestra en la celda  
         cellId.textContent = task.task_id;
+=======
+        const cellDelete = newRow.insertCell(7);
+    
+        cellId.textContent = taskId; // Usa taskId para mostrar en la interfaz
+>>>>>>> main
         cellName.textContent = task.name_task;
         cellCategory.textContent = task.category;
         cellPriority.textContent = task.priority;
         cellDate.textContent = task.start_date;
         cellStatus.innerHTML = `<input type="checkbox" ${task.status === 'Concluded' ? 'checked' : ''} />`;
+<<<<<<< HEAD
 
         cellEdit.innerHTML = '<button class="edit-btn"><img src="../img/edit.png" alt="Edit"></button>';
         const editButton = newRow.querySelector('.edit-btn');
@@ -417,23 +434,44 @@ document.addEventListener("DOMContentLoaded", () => {
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Eliminar';
         deleteButton.className = 'delete-btn';
+=======
+    
+        cellEdit.innerHTML = '<button class="edit-btn"><img src="../img/edit.png" alt="Edit"></button>';
+        const editButton = newRow.querySelector('.edit-btn');
+        editButton.onclick = () => openEditTaskModal(task.task_id, currentUserId);
+
+        cellDelete.innerHTML = '<button class="delete-btn-task"><img src="../img/trash-task.png" alt="delete"></button>';
+    
+        const deleteButton = newRow.querySelector('.delete-btn-task');
+>>>>>>> main
         deleteButton.onclick = async () => {
+            console.log(`Task objeto:`, task); // Verifica la estructura de task
+            console.log(`ID de tarea a eliminar: ${taskId}`); // Usa taskId en lugar de task.id o task.task_id
+            
             const confirmed = confirm('¿Estás seguro de que deseas eliminar esta tarea?');
             if (confirmed) {
+<<<<<<< HEAD
                 const success = await deleteTask(task.task_id);
                 if (success) {
                     const rowToDelete = document.getElementById(`task-${task.task_id}`); // Asegúrate de usar task.task_id aquí  
+=======
+                const success = await deleteTask(taskId); // Usa taskId para la eliminación en la base de datos
+                if (success) {
+                    const rowToDelete = document.getElementById(`task-${taskId}`); // Usa taskId
+                    console.log(`Fila a eliminar:`, rowToDelete);
+>>>>>>> main
                     if (rowToDelete) {
-                        rowToDelete.remove();
+                        rowToDelete.remove(); // Elimina la fila de la interfaz
+                    } else {
+                        console.error(`No se encontró la fila con el ID: task-${taskId}`);
                     }
                 } else {
                     alert('No se pudo eliminar la tarea. Inténtalo de nuevo más tarde.');
                 }
             }
         };
-        cellEdit.appendChild(deleteButton);
-
     }
+    
 
     function openTask(modal) {
         return new Promise((resolve) => {
@@ -488,19 +526,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    //edicion tareas
-
-    function openEditModal(taskId, currentUserId) {
+    function openEditTaskModal(taskId, currentUserId) {
         const modal = document.getElementById('editTaskModal');
         modal.classList.add('show');
 
         const taskRow = document.getElementById(`task-${taskId}`);
+<<<<<<< HEAD
 
         if (!taskRow) {
             console.error('El elemento de tarea no fue encontrado en el DOM.');
             return;
         } else
         {
+=======
+        console.log(taskRow);
+        if (taskRow) {
+>>>>>>> main
             document.getElementById('editTaskName').value = taskRow.querySelector('.task-name').textContent;
             document.getElementById('editTaskDate').value = taskRow.querySelector('.task-date').textContent;
             document.getElementById('editTaskCategory').value = taskRow.querySelector('.task-category').textContent;
@@ -557,4 +598,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    async function deleteTask(taskId) {
+        const conn = await getConnection();
+        try {
+            await conn.query('CALL DeleteTaskById(?)', [taskId]); // Envía taskId a la base de datos
+            console.log('Tarea con ID ' + taskId + ' eliminada con éxito');
+            return true; // Devuelve verdadero si la eliminación fue exitosa
+        } catch (error) {
+            console.error('Error al eliminar la tarea:', error);
+            return false; // Devuelve falso si hubo un error
+        } finally {
+            if (conn) {
+                conn.end(); // Asegúrate de cerrar la conexión
+            }
+        }
+    }
 });
