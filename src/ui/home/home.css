@@ -9,7 +9,7 @@ body {
     background-color: #92CACE;
     color: #333;
 }
-
+/*Sidebar*/
 .sidebar_menu {
     display: flex;
     flex-direction: column;
@@ -78,8 +78,8 @@ body {
     color: #ffff;
     width: 80%;
 }
-
-.modal, .modal-edit-subject {
+ /*Modales*/
+.modal, .modal-edit-subject, .modal-task {
     display: none; 
     position: fixed; 
     z-index: 1; 
@@ -94,39 +94,59 @@ body {
     transform: translateY(-20px); 
     transition: opacity 0.3s ease, transform 0.3s ease; 
     backdrop-filter: blur(5px);
+    overflow: auto;
 } 
 
-.modal-tittle {
+.modal-tittle, .modal-tittle-task {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.modal.show {
+.modal.show, .modal-edit-subject.show, .modal-task.show {
     display: flex; 
+    
 }
 
-.modal-content {
-    background-color: #fefefe;  
-    padding: 20px;  
-    border: 1px solid #888; 
-    width: 50%; 
-    border-radius: 8px; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
-}
-
-.modal-edit-subject.show {
-    display: flex;
-}
-
-.modal-edit-subject-content {
+.modal-content, .modal-edit-subject-content{
     background-color: white;
     margin: 5% auto;
     padding: 20px;
     border-radius: 10px;
-    width: 50%; /* Ancho del modal */
+    width: 50%; 
+    
 }
 
+.modal-content-task, .modal-edit-task-content {
+    background-color: white;
+    margin-top: 5rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    width: 50%;
+}
+
+.close {  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;    
+    text-decoration: none;  
+    cursor: pointer;  
+    transition: color 0.3s ease;
+    width: 1rem;
+    height: 2vh;
+    font-size: 3rem;
+} 
+
+.close:hover, .close:focus {
+    color: #f00; 
+    transform: scale(1.1); 
+}
+
+.close:active {
+    transform: scale(0.9); 
+}
+/*Home*/
 .container {
     display: flex;
     justify-content: space-around;
@@ -143,7 +163,7 @@ body {
     height: 100vh;
     width: 33%;
 }
-
+/*Subject and Task container*/
 .subject-container, .task-container {
     background-color: #DDEFF0;
     width: 100%;
@@ -151,7 +171,7 @@ body {
     border-radius: 0.5rem;
     overflow-y: auto;
 }
-
+/*Details container*/
 .details-container {
     background-color: #DDEFF0;
     width: 100%;
@@ -181,7 +201,7 @@ body {
     border-radius: 1rem;
     margin: 1rem;
 }
-
+/*Completed container*/
 .completed-container {
     background-color: #DDEFF0;
     width: 100%;
@@ -221,7 +241,7 @@ body {
 .drop_down_img {
     cursor: pointer;
 }
-
+/*Task table*/
 .name-colum-subject {
     display: flex;
     flex-direction: row;
@@ -264,7 +284,7 @@ button {
     cursor: pointer;
     margin-top: 1rem;
 }
-
+/*Add buttons*/
 .add-subject-btn, .add-task-btn {
     display: flex;
     align-items: center;
@@ -307,7 +327,7 @@ h2 {
     flex-direction: column;
     padding: 1rem;
 }
-
+/*Subject cards*/
 .subject-card {
     display: flex;
     flex-direction: row;
@@ -332,10 +352,30 @@ h2 {
     font-size: 0.79rem;
 }
 
+.edit-btn-subject {
+    background-color: transparent;
+    margin-top: 0;
+    transition: transform 0.3s ease;
+}
+
+.edit-btn-subject:hover {
+    transform: scale(1.1);
+}
+
+.edit-btn-subject img {
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
 .delete-btn:hover img {
     content: url('../img/trash-white.png'); 
 }
-
 
 .subject-name {
     font-weight: bold;
@@ -350,7 +390,6 @@ h2 {
     font-size: 0.8rem;
     color: #333;
     width: 30%;
-   
 }
 
 .delete-btn {
@@ -367,7 +406,7 @@ h2 {
     width: 2rem;
     height: 2rem;
 }
-
+/*Table task*/
 .name-colum-task {
     display: flex;
     justify-content: space-between;
@@ -409,13 +448,11 @@ table tr td:first-child {
     border-bottom-left-radius: 10px;
 }
 
-/* Redondeamos las esquinas de la penúltima columna (última columna coloreada) */
 table tr td:nth-last-child(3) {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 
-/* Última columna con íconos, sin color de fondo */
 table td:last-child, 
 table td:nth-last-child(2) {
     background-color: transparent;
@@ -477,27 +514,6 @@ table button img {
     height: 1.5rem;
 }
 
-.edit-btn-subject {
-    background-color: transparent;
-    margin-top: 0;
-    transition: transform 0.3s ease;
-}
-
-.edit-btn-subject:hover {
-    transform: scale(1.1);
-}
-
-.edit-btn-subject img {
-    background-color: transparent;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border: none;
-    cursor: pointer;
-    width: 1.5rem;
-    height: 1.5rem;
-}
-
 .delete-btn-task{
     background-color: transparent;
     margin-top: 0;
@@ -534,29 +550,8 @@ table button img {
     align-items: center;      
     font-style: italic;     
 }
-
-.close {  
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #aaa;    
-    text-decoration: none;  
-    cursor: pointer;  
-    transition: color 0.3s ease;
-    width: 1rem;
-    height: 2vh;
-    font-size: 3rem;
-} 
-
-.close:hover, .close:focus {
-    color: #f00; 
-    transform: scale(1.1); 
-}
-
-.close:active {
-    transform: scale(0.9); 
-}
-
+/*Forms*/
+/*Subject Form*/
 #addSubjectForm {
     display: flex;
     flex-direction: column; 
@@ -654,81 +649,100 @@ table button img {
     background-color: #3B7B80; 
     transform: scale(0.98); 
 }
-
-.modal-task {  
-    display: none;  
-    position: fixed;   
-    z-index: 1000; 
-    left: 0;  
-    top: 0;  
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgba(0, 0, 0, 0.5); 
-}  
-
-.modal-content-task {  
-    background-color: #fefefe; 
-    margin: 15% auto;  
-    padding: 20px;  
-    border: 1px solid #888;  
-    width: 80%;  
-    max-width: 500px;  
-    border-radius: 5px;   
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);   
-}  
-
-.modal-tittle-task {  
-    display: flex;  
-    justify-content: space-between; 
-    align-items: center; 
-}  
-
-.close-task {  
-    color: #aaa; 
-    font-size: 28px; 
-    font-weight: bold; 
-    cursor: pointer; 
-}  
-
-.close-task:hover,  
-.close-task:focus {  
-    color: black; 
-    text-decoration: none;  
-}  
- 
-.modal-task input[type="text"],  
-.modal-task input[type="date"],  
-.modal-task select {  
-    width: 100%; 
-    padding: 10px; 
-    margin: 10px 0; 
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}  
-
-.modal-task button[type="submit"] {  
-    background-color: #4CAF50; 
-    color: white; 
-    padding: 10px 15px;  
-    border: none; 
-    border-radius: 4px; 
-    cursor: pointer; 
-    font-size: 16px;  
-}  
-
-.modal-task button[type="submit"]:hover {  
-    background-color: #45a049; 
-}  
-
-.modal-task.show {  
-    display: block; 
+/*Task form*/
+#addTaskForm {
+    display: flex;
+    flex-direction: column; 
+    gap: 15px; 
 }
 
-.trash-icon {
-    position: relative;
-    width: 30px;
-    height: 40px;
-    margin: 20px;
-  }
-  
+#addTaskForm label {
+    font-weight: bold; 
+    color: #333; 
+}
+
+#addTaskForm input[type="text"],
+#addTaskForm input[type="date"],
+#addTaskForm button {
+    padding: 10px; 
+    border: 1px solid #B2DFDB; 
+    border-radius: 1rem; 
+    font-size: 1rem; 
+}
+
+#addTaskForm input[type="text"] {
+    width: 100%; 
+}
+
+#addTaskForm input[type="date"] {
+    width: 100%; 
+}
+
+#addTaskForm button {
+    background-color: #5FAAB1; 
+    color: #FFFFFF; 
+    border: none; 
+    cursor: pointer; 
+    width: 50%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    align-items: center;
+    margin-left: 10rem;
+}
+
+#addTaskForm button:hover {
+    background-color: #4A9197; 
+    transform: scale(1.05); 
+}
+
+#addTaskForm button:active {
+    background-color: #3B7B80; 
+    transform: scale(0.98); 
+}
+#editTaskForm {
+    display: flex;
+    flex-direction: column; 
+    gap: 15px; 
+}
+
+#editTaskForm label {
+    font-weight: bold; 
+    color: #333; 
+}
+
+#editTaskForm input[type="text"],
+#editTaskForm input[type="date"],
+#editTaskForm button {
+    padding: 10px; 
+    border: 1px solid #B2DFDB; 
+    border-radius: 1rem; 
+    font-size: 1rem; 
+}
+
+#editTaskForm input[type="text"] {
+    width: 100%; 
+}
+
+#editTaskForm input[type="date"] {
+    width: 100%; 
+}
+
+#editTaskForm button {
+    background-color: #5FAAB1; 
+    color: #FFFFFF; 
+    border: none; 
+    cursor: pointer; 
+    width: 50%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    align-items: center;
+    margin-left: 10rem;
+}
+
+#editTaskForm button:hover {
+    background-color: #4A9197; 
+    transform: scale(1.05); 
+}
+
+#editTaskForm button:active {
+    background-color: #3B7B80; 
+    transform: scale(0.98); 
+}

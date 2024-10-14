@@ -35,7 +35,7 @@
                 <img src="../img/plus.png" alt="Icono" class="btn-img">
             </button>
         </section>
-        <div id="addSubjectModal" class="modal">  
+        <div id="addSubjectModal" class="modal">  <!-- Subject Modal Section -->
             <div class="modal-content"> 
                 <div class="modal-tittle">
                     <h2>Add New Subject</h2>  
@@ -52,7 +52,7 @@
                 </form>  
             </div>  
         </div> 
-        <div id="editSubjectModal" class="modal-edit-subject">
+        <div id="editSubjectModal" class="modal-edit-subject"> <!-- Subject Edit Modal Section -->
             <div class="modal-edit-subject-content">
                 <div class="modal-tittle">
                     <h2>Edit Subject</h2>  
@@ -65,7 +65,7 @@
                     <input type="date" id="editSubjectDateStart" name="subjectDateStart">
                     <label for="editSubjectDateEnd">End Date:</label>
                     <input type="date" id="editSubjectDateEnd" name="subjectDateEnd">
-                    <label for="editSubjectDateEnd">Add existing task</label>
+                    <label for="editSubjectDateEnd">Add existing task:</label>
                     <input type="text" id="editSubjectAddTask" name="subjectAddTask">
                     <button type="submit">Save Changes</button>
                 </form>
@@ -75,7 +75,7 @@
             <h2>Task</h2>
             <div class="task-container">
                 <section class="name-colum-task">
-                    <h3 class="title-task">Databases 2</h3>
+                    <h3 class="title-task"></h3>
                     <img src="../img/filter.png" for="filter_icon" class="filter-task">
                 </section>
                 <div class="task-list">
@@ -92,16 +92,76 @@
                         </tr>
                         </thead>
                         <tbody class="tbody">
-
                         </tbody>
                     </table>
                 </div>
             </div>
-            <button id="openTaskModal">
+            <button class="add-task-btn" id="openTaskModal">
                 <span class="btn-text">Add Task</span>
                 <img src="../img/plus.png" alt="Icono" class="btn-img">
             </button>
         </section>
+        <div id="addTaskModal" class="modal-task"> <!-- Task Modal Section -->
+            <div class="modal-content-task">
+                <div class="modal-tittle-task">
+                    <h2>Add New Task</h2>
+                    <span class="close" id="closeModal-task">&times;</span>
+                </div>
+                <form id="addTaskForm">
+                    <label for="taskName">Task Name:</label> 
+                    <input type="text" id="taskName" name="taskName" required>
+                    <label for="taskNotes">Notes:</label> 
+                    <input type="text" id="taskNotes" name="tasktNotes" required>
+                    <label for="taskDate">Start Date:</label> 
+                    <input type="date" id="taskDate" name="taskDate" required>
+                    <label for="taskDate">End Date:</label>
+                    <input type="date" name="taskDateEnd" id="taskDateEnd">
+                    <label for="taskCategory">Task Category:</label> 
+                    <input type="text" id="taskCategory" name="taskCategory" required>
+                    <select name="taskStatus" id="taskStatus"> 
+                        <option value="Pending">Pending</option>
+                        <option value="In process">In process</option>
+                        <option value="Concluded">Concluded</option>
+                    </select>
+                    <select name="taskPriority" id="taskPriority"> 
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                    <button type="submit" id="sendTask">Add Task</button> 
+                </form>
+            </div>
+        </div>
+        <div id="editTaskModal" class="modal-edit-subject"> <!-- Task Edit Modal Section -->
+            <div class="modal-edit-task-content">
+                <div class="modal-tittle">
+                    <h2>Edit Task</h2>  
+                    <span class="close" id="closeModalTask">&times;</span>
+                </div> 
+                <form id="editTaskForm">
+                    <label for="editTaskName">Task Name:</label> 
+                    <input type="text" id="editTaskName" name="taskName" required>
+                    <label for="editTaskNotes">Notes:</label> 
+                    <input type="text" id="editTaskNotes" name="tasktNotes" required>
+                    <label for="editTaskDate">Date:</label> 
+                    <input type="date" id="editTaskDate" name="taskDate" required>
+                    <input type="date" name="editTaskDateEnd" id="editTaskDateEnd">
+                    <label for="editTaskCategory">Task Category</label> 
+                    <input type="text" id="editTaskCategory" name="taskCategory" required>
+                    <select name="editTaskStatus" id="editTaskStatus"> 
+                        <option value="Pending">Pending</option>
+                        <option value="In process">In process</option>
+                        <option value="Concluded">Concluded</option>
+                    </select> 
+                    <select name="editTaskPriority" id="editTaskPriority"> 
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                    <button type="submit" id="sendTask">Save changes</button> 
+                </form>
+            </div>
+        </div>
         <section class="details-section"> <!-- Detalles de seccion -->
             <h2>Details</h2>
             <div class="details-container">
@@ -121,67 +181,7 @@
             </div>
         </section>
     </div>
-    <div id="addTaskModal" class="modal-task">
-        <div class="modal-content-task">
-            <div class="modal-tittle-task">
-                <h2>Add New Task</h2>
-                <span class="close-task" id="closeModal-task">&times;</span>
-            </div>
-            <form id="addTaskForm">
-                <label for="taskName">Task Name:</label> <!--nombre de tarea-->
-                <input type="text" id="taskName" name="taskName" required>
-                <label for="taskNotes">Notes:</label> <!--Notas-->
-                <input type="text" id="taskNotes" name="tasktNotes" required>
-                <label for="taskDate">Date:</label> <!--Date-->
-                <input type="date" id="taskDate" name="taskDate" required>
-                <input type="date" name="taskDateEnd" id="taskDateEnd">
-                <label for="taskCategory">Task Category</label> <!--Categoria-->
-                <input type="text" id="taskCategory" name="taskCategory" required>
-                <select name="taskStatus" id="taskStatus"> <!-- Estado tarea-->
-                    <option value="Pending">Pending</option>
-                    <option value="In process">In process</option>
-                    <option value="Concluded">Concluded</option>
-                </select>
-                <select name="taskPriority" id="taskPriority"> <!--Prioridad-->
-                    <option value="Low">Low</option>
-                    <option value="Medium">Medium</option>
-                    <option value="High">High</option>
-                </select>
-                <button type="submit" id="sendTask">Add Task</button> <!--BOTON ENVIAR TAREA-->
-            </form>
-        </div>
-    </div>
-    <div id="editTaskModal" class="modal-edit-subject">
-        <div class="modal-edit-subject-content">
-            <div class="modal-tittle">
-                <h2>Edit Task</h2>  
-                <span class="close" id="closeModalTask">&times;</span>
-            </div> 
-            <form id="editTaskForm">
-                <label for="editTaskName">Task Name:</label> <!--nombre de tarea-->
-                <input type="text" id="editTaskName" name="taskName" required>
-                <label for="editTaskNotes">Notes:</label> <!--Notas-->
-                <input type="text" id="editTaskNotes" name="tasktNotes" required>
-                <label for="editTaskDate">Date:</label> <!--Date-->
-                <input type="date" id="editTaskDate" name="taskDate" required>
-                <input type="date" name="editTaskDateEnd" id="editTaskDateEnd">
-                <label for="editTaskCategory">Task Category</label> <!--Categoria-->
-                <input type="text" id="editTaskCategory" name="taskCategory" required>
-                <select name="editTaskStatus" id="editTaskStatus"> <!-- Estado tarea-->
-                    <option value="Pending">Pending</option>
-                    <option value="In process">In process</option>
-                    <option value="Concluded">Concluded</option>
-                </select> 
-                <select name="editTaskPriority" id="editTaskPriority"> <!--Prioriadad-->
-                    <option value="Low">Low</option>
-                    <option value="Medium">Medium</option>
-                    <option value="High">High</option>
-                </select>
-                <button type="submit" id="sendTask">Save changes</button> <!--BOTON ENVIAR TAREA-->
-            </form>
-        </div>
-       
-    </div>
+    
 
     <footer class="footer_container">
         <p>&copy; 2024 EduPlanner_Team</p>
