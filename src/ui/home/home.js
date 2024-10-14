@@ -101,13 +101,14 @@ document.addEventListener("DOMContentLoaded", () => {
     function openAddSubject(modal) {
         return new Promise((resolve) => {
             modal.classList.add("show");
+    
             document.getElementById("addSubjectForm").onsubmit = async function (event) {
                 event.preventDefault();
-
+    
                 let subjectName = document.getElementById('subjectName').value;
                 let subjectDateStart = document.getElementById('subjectDateStart').value;
                 let subjectDateEnd = document.getElementById('subjectDateEnd').value;
-
+    
                 let success = await addSubject(currentUserId, subjectName, subjectDateStart, subjectDateEnd);
                 if (success) {
                     event.target.reset();
@@ -116,6 +117,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     alert('Error al agregar la materia. Por favor, inténtalo de nuevo.');
                 }
             };
+    
+            // Cerrar modal cuando se presiona el botón de cerrar
+            document.getElementById("closeModal").onclick = function() {
+                modal.classList.remove("show");
+                document.getElementById("addSubjectForm").reset(); // Limpiar el formulario si es necesario
+            };
+    
             resolve();
         });
     }
