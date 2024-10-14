@@ -26,6 +26,11 @@ body {
     border-radius: 0.5rem;
     font-size: 1.6rem;
     z-index: 1;
+
+}
+
+.sidebar_menu:hover {
+    background-color: #3D7F86; 
 }
 
 .sidepanel {
@@ -105,7 +110,7 @@ body {
 
 .modal.show, .modal-edit-subject.show, .modal-task.show {
     display: flex; 
-    
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Ya definido */
 }
 
 .modal-content, .modal-edit-subject-content{
@@ -303,6 +308,7 @@ button {
 .add-subject-btn:hover, .add-task-btn:hover {
     background-color: #3D7F86; 
     transform: scale(1.05); 
+    
 }
 
 .add-subject-btn:active, .add-task-btn:active {
@@ -338,6 +344,12 @@ h2 {
     height: 10vh;
     cursor: pointer;
     margin: 0.5rem;
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+}
+
+.subject-card:hover {
+    background-color: #BFE0E2; 
+    transform: scale(1.02); 
 }
 
 .subject-info {
