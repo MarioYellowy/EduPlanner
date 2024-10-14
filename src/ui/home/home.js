@@ -368,13 +368,11 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error('No se pudo encontrar el tbody para agregar la tarea.');
             return;
         }
-    
-        // Asegúrate de que task_id esté definido correctamente
-        const taskId = task.task_id || task.id; // Usa task_id o id dependiendo de lo que esté disponible
-        
+
+        // Asegúrate de que estés utilizando la propiedad correcta para el ID  
         const newRow = taskList.insertRow(-1);
-        newRow.id = `task-${taskId}`; // Usa taskId aquí para asegurar consistencia
-    
+        newRow.id = `task-${task.task_id}`; // Asegúrate de que aquí esté task.task_id si eso es lo que necesitas  
+
         const cellId = newRow.insertCell(0);
         const cellName = newRow.insertCell(1);
         const cellCategory = newRow.insertCell(2);
@@ -383,35 +381,47 @@ document.addEventListener("DOMContentLoaded", () => {
         const cellStatus = newRow.insertCell(5);
         const cellEdit = newRow.insertCell(6);
         const cellDelete = newRow.insertCell(7);
-    
-        cellId.textContent = taskId; // Usa taskId para mostrar en la interfaz
+
+        cellName.className = 'task-name';
+        cellCategory.className = 'task-category';
+        cellPriority.className = 'task-priority';
+        cellDate.className = 'task-date';
+        cellStatus.className = 'task-status';
+
+        // Corrige el ID que se muestra en la celda  
+        cellId.textContent = task.task_id;
         cellName.textContent = task.name_task;
         cellCategory.textContent = task.category;
         cellPriority.textContent = task.priority;
         cellDate.textContent = task.start_date;
         cellStatus.innerHTML = `<input type="checkbox" ${task.status === 'Concluded' ? 'checked' : ''} />`;
-    
+        cellDelete.innerHTML = '<button class="delete-btn-task"><img src="../img/trash-task.png" alt="delete"></button>';
         cellEdit.innerHTML = '<button class="edit-btn"><img src="../img/edit.png" alt="Edit"></button>';
         const editButton = newRow.querySelector('.edit-btn');
-        editButton.onclick = () => openEditTaskModal(task.task_id, currentUserId);
+        console.log(task.task_id)
 
-        cellDelete.innerHTML = '<button class="delete-btn-task"><img src="../img/trash-task.png" alt="delete"></button>';
+        if (task.task_id) {
+            editButton.onclick = () => openEditTaskModal(task.task_id, currentUserId);
+        } else {
+            console.error("task_id es nulo o indefinido.");
+        }
+
     
         const deleteButton = newRow.querySelector('.delete-btn-task');
         deleteButton.onclick = async () => {
             console.log(`Task objeto:`, task); // Verifica la estructura de task
-            console.log(`ID de tarea a eliminar: ${taskId}`); // Usa taskId en lugar de task.id o task.task_id
+            console.log(`ID de tarea a eliminar: ${task.task_id}`); // Usa taskId en lugar de task.id o task.task_id
             
             const confirmed = confirm('¿Estás seguro de que deseas eliminar esta tarea?');
             if (confirmed) {
-                const success = await deleteTask(taskId); // Usa taskId para la eliminación en la base de datos
+                const success = await deleteTask(task.task_id); // Usa taskId para la eliminación en la base de datos
                 if (success) {
-                    const rowToDelete = document.getElementById(`task-${taskId}`); // Usa taskId
+                    const rowToDelete = document.getElementById(`task-${task.task_id}`); // Usa taskId
                     console.log(`Fila a eliminar:`, rowToDelete);
                     if (rowToDelete) {
                         rowToDelete.remove(); // Elimina la fila de la interfaz
                     } else {
-                        console.error(`No se encontró la fila con el ID: task-${taskId}`);
+                        console.error(`No se encontró la fila con el ID: task-${task.task_id}`);
                     }
                 } else {
                     alert('No se pudo eliminar la tarea. Inténtalo de nuevo más tarde.');
@@ -452,6 +462,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const result = await conn.query('CALL GetUserTask(?)', [user_id]);
             const listOfTask = result[0][0];
+            console.log(listOfTask)
             return listOfTask;
         } catch (error) {
             console.error('Error al obtener las tareas:', error);
@@ -476,21 +487,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function openEditTaskModal(taskId, currentUserId) {
         const modal = document.getElementById('editTaskModal');
-        console.log(taskId)
-        console.log(currentUserId)
         modal.classList.add('show');
 
         const taskRow = document.getElementById(`task-${taskId}`);
-        console.log(taskRow);
-        if (taskRow) {
+
+        if (!taskRow) {
+            console.error('El elemento de tarea no fue encontrado en el DOM.');
+            return;
+        } else
+        {
             document.getElementById('editTaskName').value = taskRow.querySelector('.task-name').textContent;
-            document.getElementById('editTaskNotes').value = taskRow.querySelector('.task-notes').textContent;
-            document.getElementById('editTaskDate').value = taskRow.querySelector('.task-start-date').textContent;
-            document.getElementById('editTaskDateEnd').value = taskRow.querySelector('.task-end-date').textContent;
+            document.getElementById('editTaskDate').value = taskRow.querySelector('.task-date').textContent;
             document.getElementById('editTaskCategory').value = taskRow.querySelector('.task-category').textContent;
-            document.getElementById('editTaskStatus').value = taskRow.querySelector('.task-status input').checked ? 'Concluded' : 'Pending'; 
+            document.getElementById('editTaskStatus').value = taskRow.querySelector('.task-status input').checked ? 'Concluded' : 'Pending';
             document.getElementById('editTaskPriority').value = taskRow.querySelector('.task-priority').textContent;
         }
+      
 
         document.getElementById('editTaskForm').onsubmit = async function (event) {
             event.preventDefault();
@@ -527,7 +539,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateTaskInInterface(taskId, taskName, taskStatus, taskNotes, taskCategory, taskPriority, taskDateStart, taskDateEnd) {
-        const taskRow = document.getElementById(`task-${taskId}`); 
+        const taskRow = document.getElementById(`task-${taskId}`);
 
         if (taskRow) {
             taskRow.querySelector('.task-name').textContent = taskName;
