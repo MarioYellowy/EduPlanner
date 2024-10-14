@@ -118,10 +118,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             };
     
-            // Cerrar modal cuando se presiona el botón de cerrar
             document.getElementById("closeModal").onclick = function() {
                 modal.classList.remove("show");
-                document.getElementById("addSubjectForm").reset(); // Limpiar el formulario si es necesario
+                document.getElementById("addSubjectForm").reset(); 
             };
     
             resolve();
