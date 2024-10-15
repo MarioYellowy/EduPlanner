@@ -379,7 +379,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Asegúrate de que estés utilizando la propiedad correcta para el ID  
         const newRow = taskList.insertRow(-1);
-        newRow.id = `task-${task.task_id}`; // Asegúrate de que aquí esté task.task_id si eso es lo que necesitas  
+        newRow.id = `task-${task.task_id}`; 
+        console.log(task.task_id)// Asegúrate de que aquí esté task.task_id si eso es lo que necesitas  
 
         const cellId = newRow.insertCell(0);
         const cellName = newRow.insertCell(1);
@@ -395,8 +396,6 @@ document.addEventListener("DOMContentLoaded", () => {
         cellPriority.className = 'task-priority';
         cellDate.className = 'task-date';
         cellStatus.className = 'task-status';
-
-        // Corrige el ID que se muestra en la celda  
         cellId.textContent = task.task_id;
         cellName.textContent = task.name_task;
         cellCategory.textContent = task.category;
