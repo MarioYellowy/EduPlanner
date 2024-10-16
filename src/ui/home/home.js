@@ -357,7 +357,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const newTask = { id: newTaskId, name_task, category, priority, start_date, status }; 
             console.log('Nueva tarea:', JSON.stringify(newTask, null, 2)); 
             addLastTaskToInterface(newTask); 
-    
+
+
             return true;
         } catch (error) {
             console.error('Error al agregar la tarea:', error);
@@ -420,12 +421,12 @@ document.addEventListener("DOMContentLoaded", () => {
             
             const confirmed = confirm('¿Estás seguro de que deseas eliminar esta tarea?');
             if (confirmed) {
-                const success = await deleteTask(task.task_id); // Usa taskId para la eliminación en la base de datos
+                const success = await deleteTask(task.task_id); 
                 if (success) {
-                    const rowToDelete = document.getElementById(`task-${task.task_id}`); // Usa taskId
+                    const rowToDelete = document.getElementById(`task-${task.task_id}`);
                     console.log(`Fila a eliminar:`, rowToDelete);
                     if (rowToDelete) {
-                        rowToDelete.remove(); // Elimina la fila de la interfaz
+                        rowToDelete.remove(); 
                     } else {
                         console.error(`No se encontró la fila con el ID: task-${task.task_id}`);
                     }
@@ -494,7 +495,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function openEditTaskModal(taskId, currentUserId) {
         const modal = document.getElementById('editTaskModal');
     
-        // Comprobar si el modal ya está visible
+        
         if (modal.classList.contains('show')) {
             modal.classList.remove('show');
         }
@@ -508,7 +509,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
     
-        // Accede a los elementos dentro de taskRow
+        
         const taskName = taskRow.querySelector('.task-name');
         const taskDate = taskRow.querySelector('.task-date');
         const taskCategory = taskRow.querySelector('.task-category');
@@ -524,27 +525,27 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             console.error('Faltan algunos elementos en la tarea para editar.');
         }
-        // Configura la acción de cierre del modal
+        
         document.getElementById("closeModalTask").onclick = () => {
-            modal.classList.remove('show'); // Cierra el modal
-            resetModalFields(); // Limpia los campos del modal
+            modal.classList.remove('show'); 
+            resetModalFields(); 
         };
     
-        // Configura el evento submit para actualizar la tarea
+        
         document.getElementById('editTaskForm').onsubmit = async function (event) {
             event.preventDefault();
             console.log("Abriendo edit modal:" + taskId)
-            await updateTask(taskId, currentUserId); // Actualiza la tarea en la base de datos
-            modal.classList.remove('show'); // Cierra el modal
-            resetModalFields(); // Limpia los campos del modal
+            await updateTask(taskId, currentUserId); 
+            modal.classList.remove('show'); 
+            resetModalFields(); 
         };
     }
     function resetModalFields() {
         document.getElementById('editTaskName').value = '';
         document.getElementById('editTaskDate').value = '';
         document.getElementById('editTaskCategory').value = '';
-        document.getElementById('editTaskStatus').value = 'Pending'; // Valor predeterminado
-        document.getElementById('editTaskPriority').value = 'Low'; // Valor predeterminado
+        document.getElementById('editTaskStatus').value = 'Pending'; 
+        document.getElementById('editTaskPriority').value = 'Low'; 
     }
 
     async function updateTask(taskId, currentUserId) {
@@ -584,24 +585,23 @@ document.addEventListener("DOMContentLoaded", () => {
             taskRow.querySelector('.task-priority').textContent = taskPriority;
             taskRow.querySelector('.task-date').textContent = taskDateEnd;
             taskRow.querySelector('.task-status').checked = (taskStatus === 'Concluded');
-           
-
+        
 
         }
     }
-// //
+
     async function deleteTask(taskId) {
         const conn = await getConnection();
         try {
-            await conn.query('CALL DeleteTaskById(?)', [taskId]); // Envía taskId a la base de datos
+            await conn.query('CALL DeleteTaskById(?)', [taskId]); 
             console.log('Tarea con ID ' + taskId + ' eliminada con éxito');
-            return true; // Devuelve verdadero si la eliminación fue exitosa
+            return true; 
         } catch (error) {
             console.error('Error al eliminar la tarea:', error);
-            return false; // Devuelve falso si hubo un error
+            return false; 
         } finally {
             if (conn) {
-                conn.end(); // Asegúrate de cerrar la conexión
+                conn.end(); 
             }
         }
     }
