@@ -377,12 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
  
         const newRow = taskList.insertRow(-1);
-<<<<<<< HEAD
-        newRow.id = `task-${task.task_id}`; 
-        console.log(task.task_id)// Asegúrate de que aquí esté task.task_id si eso es lo que necesitas  
-=======
         newRow.id = `task-${task.task_id}`;  
->>>>>>> main
 
         const cellId = newRow.insertCell(0);
         const cellName = newRow.insertCell(1);
@@ -567,7 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
             await conn.query('CALL UpdateTask(?,?,?,?,?,?,?,?,?)',
                 [currentUserId, taskId, taskName, taskStatus, taskNotes, taskCategory, taskPriority, taskDateStart, taskDateEnd]);
 
-            updateTaskInInterface(taskId, taskName, taskStatus, taskNotes, taskCategory, taskPriority, taskDateStart, taskDateEnd);
+            updateTaskInInterface(taskId, taskName, taskStatus, taskCategory, taskPriority, taskDateStart, taskDateEnd);
             console.log('Tarea actualizada con éxito');
         } catch (error) {
             console.error('Error al actualizar la tarea:', error);
@@ -578,21 +573,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function updateTaskInInterface(taskId, taskName, taskStatus, taskNotes, taskCategory, taskPriority, taskDateStart, taskDateEnd) {
+    function updateTaskInInterface(taskId, taskName, taskStatus,taskCategory, taskPriority, taskDateStart, taskDateEnd) {
         const taskRow = document.getElementById(`task-${taskId}`);
+        const details = document.getElementById('details-info-container')
 
         if (taskRow) {
             taskRow.querySelector('.task-id').textContent = taskId;
             taskRow.querySelector('.task-name').textContent = taskName;
             taskRow.querySelector('.task-category').textContent = taskCategory;
             taskRow.querySelector('.task-priority').textContent = taskPriority;
-            taskRow.querySelector('.task-start-date').textContent = taskDateStart;
-            taskRow.querySelector('.task-status input').checked = (taskStatus === 'Concluded');
-            taskRow.querySelector('.task-end-date').textContent = taskDateEnd;
-            
+            taskRow.querySelector('.task-date').textContent = taskDateEnd;
+            taskRow.querySelector('.task-status').checked = (taskStatus === 'Concluded');
+           
+
+
         }
     }
-
+// //
     async function deleteTask(taskId) {
         const conn = await getConnection();
         try {
